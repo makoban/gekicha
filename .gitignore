@@ -1,0 +1,19 @@
+# 秘密情報（絶対にコミットしない）
+.env
+.env.*
+*.key
+*.pem
+
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# エディタ
+.vscode/
+.idea/
+*.swp
