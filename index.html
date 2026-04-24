@@ -16,7 +16,8 @@
   html, body {
     height: 100%;
     overflow: hidden;
-    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+    font-family: "Hiragino Maru Gothic ProN", "ヒラギノ丸ゴ ProN", "Rounded Mplus 1c",
+                 -apple-system, BlinkMacSystemFont, sans-serif;
     background: #000;
   }
 
@@ -36,94 +37,259 @@
     padding: 20px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    transform: translateX(30px);
+    transition: opacity 0.3s ease;
   }
 
   .screen.active {
     opacity: 1;
     pointer-events: auto;
-    transform: translateX(0);
   }
 
   /* ===== オープニング ===== */
   #opening {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ffa94d 50%, #ffd93d 100%);
-    justify-content: center;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 30%,
+        #fff5d0 0%,
+        #ffd93d 15%,
+        #ffa94d 35%,
+        #ff6b6b 65%,
+        #ff4757 90%,
+        #c92a2a 100%);
+    justify-content: flex-start;
     align-items: center;
     text-align: center;
     color: #fff;
+    overflow: hidden;
+    padding-top: 30px;
   }
 
-  .logo {
-    font-size: 80px;
-    margin-bottom: 20px;
-    animation: bounce 1.2s infinite;
+  .bg-decor {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
   }
 
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0) rotate(-5deg); }
-    50% { transform: translateY(-15px) rotate(5deg); }
+  .bg-item {
+    position: absolute;
+    font-size: 28px;
+    animation: floatRotate 5s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
   }
 
-  .title {
-    font-size: 48px;
+  @keyframes floatRotate {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(20deg); }
+  }
+
+  .rays {
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    width: 800px;
+    height: 800px;
+    transform: translate(-50%, -50%);
+    background:
+      conic-gradient(
+        from 0deg,
+        rgba(255,255,255,0.15) 0deg,
+        transparent 20deg,
+        rgba(255,255,255,0.15) 40deg,
+        transparent 60deg,
+        rgba(255,255,255,0.15) 80deg,
+        transparent 100deg,
+        rgba(255,255,255,0.15) 120deg,
+        transparent 140deg,
+        rgba(255,255,255,0.15) 160deg,
+        transparent 180deg,
+        rgba(255,255,255,0.15) 200deg,
+        transparent 220deg,
+        rgba(255,255,255,0.15) 240deg,
+        transparent 260deg,
+        rgba(255,255,255,0.15) 280deg,
+        transparent 300deg,
+        rgba(255,255,255,0.15) 320deg,
+        transparent 340deg
+      );
+    animation: raySpin 30s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes raySpin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  .slot-machine {
+    font-size: 170px;
+    line-height: 1;
+    filter:
+      drop-shadow(0 10px 20px rgba(0,0,0,0.35))
+      drop-shadow(0 0 30px rgba(255,255,100,0.6));
+    animation: slotBounce 2s ease-in-out infinite;
+    z-index: 2;
+  }
+
+  @keyframes slotBounce {
+    0%, 100% { transform: translateY(0) rotate(-3deg) scale(1); }
+    50% { transform: translateY(-10px) rotate(3deg) scale(1.03); }
+  }
+
+  .title-3d {
+    font-size: 72px;
     font-weight: 900;
-    letter-spacing: 2px;
-    text-shadow: 3px 3px 0 #d94040;
-    margin-bottom: 10px;
+    color: #fff;
+    letter-spacing: -2px;
+    margin-top: -10px;
+    position: relative;
+    z-index: 3;
+    text-shadow:
+      -3px -3px 0 #ff5722,
+      3px -3px 0 #ff5722,
+      -3px 3px 0 #ff5722,
+      3px 3px 0 #ff5722,
+      -4px -4px 0 #ff5722,
+      4px -4px 0 #ff5722,
+      -4px 4px 0 #ff5722,
+      4px 4px 0 #ff5722,
+      0 6px 0 #c62828,
+      0 8px 0 #a02020,
+      0 10px 0 #801818,
+      0 14px 20px rgba(0,0,0,0.4);
+    animation: titleFloat 3s ease-in-out infinite;
   }
 
-  .subtitle {
+  @keyframes titleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  .subtitle-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
     font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 8px;
-    opacity: 0.95;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    z-index: 3;
+  }
+
+  .subtitle-deco {
+    display: inline-block;
+    width: 40px;
+    height: 2px;
+    background: #fff;
+    box-shadow: 0 0 6px rgba(255,255,255,0.8);
   }
 
   .tagline {
-    font-size: 14px;
-    opacity: 0.85;
-    margin-bottom: 40px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    margin-top: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    z-index: 3;
   }
 
-  .badge {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.25);
-    padding: 8px 20px;
+  .gift-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.95);
+    color: #ff6b35;
+    padding: 10px 24px;
     border-radius: 999px;
-    font-size: 13px;
-    margin-bottom: 40px;
-    backdrop-filter: blur(10px);
+    font-size: 14px;
+    font-weight: 800;
+    margin-top: 24px;
+    box-shadow:
+      0 6px 16px rgba(0,0,0,0.2),
+      inset 0 -2px 4px rgba(255,140,66,0.2);
+    z-index: 3;
+  }
+
+  .gift-badge .emoji {
+    font-size: 20px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
   }
 
   .start-btn {
-    background: #fff;
-    color: #ff6b6b;
-    padding: 22px 60px;
+    background: linear-gradient(180deg, #ffffff 0%, #fff5ec 100%);
+    color: #ff5722;
+    padding: 26px 80px;
     border-radius: 999px;
-    font-size: 24px;
+    font-size: 32px;
     font-weight: 900;
     border: none;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    margin-top: 28px;
     cursor: pointer;
-    animation: pulse 1.5s infinite;
+    box-shadow:
+      0 10px 0 #ffc77d,
+      0 14px 30px rgba(0,0,0,0.25),
+      inset 0 -4px 8px rgba(255,200,120,0.3);
+    animation: startPulse 1.8s ease-in-out infinite;
+    letter-spacing: 2px;
+    z-index: 3;
+    position: relative;
   }
 
-  @keyframes pulse {
+  @keyframes startPulse {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+    50% { transform: scale(1.04); }
   }
 
-  .chance {
-    margin-top: 30px;
-    font-size: 13px;
-    opacity: 0.85;
+  .start-btn:active {
+    transform: translateY(6px);
+    box-shadow:
+      0 4px 0 #ffc77d,
+      0 6px 12px rgba(0,0,0,0.2);
+  }
+
+  .coupon-ticket {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #fff7e0 0%, #ffedb5 100%);
+    padding: 14px 28px 14px 18px;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 800;
+    color: #a84a00;
+    margin-top: auto;
+    margin-bottom: 20px;
+    box-shadow:
+      0 6px 16px rgba(0,0,0,0.2),
+      inset 0 -2px 4px rgba(200,140,0,0.15);
+    border: 2px solid rgba(255,255,255,0.6);
+    z-index: 3;
+  }
+
+  .coupon-bolt {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #ff6b6b, #ff4757);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 22px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+
+  .coupon-ticket b {
+    font-size: 20px;
+    color: #e63946;
   }
 
   /* ===== アンケート画面 ===== */
   .quiz {
-    background: linear-gradient(180deg, #fffbf5 0%, #fff5ec 100%);
+    background:
+      radial-gradient(ellipse 100% 80% at 50% 0%,
+        #fff5ec 0%,
+        #ffe8d0 40%,
+        #ffd4a8 100%);
     color: #2a2a2a;
   }
 
@@ -131,30 +297,31 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
     font-size: 13px;
-    color: #666;
+    color: #a67040;
   }
 
   .progress-text {
-    font-weight: 700;
-    color: #ff8c42;
+    font-weight: 900;
+    color: #ff5722;
+    font-size: 15px;
   }
 
   .timer {
-    font-weight: 700;
+    font-weight: 800;
     font-variant-numeric: tabular-nums;
-    color: #999;
   }
 
-  /* === 応援ゲージ（ここが主役） === */
   .gauge-wrap {
     background: #fff;
-    border-radius: 18px;
+    border-radius: 20px;
     padding: 14px 16px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 12px rgba(255, 140, 66, 0.15);
-    border: 2px solid #ffe8d6;
+    margin-bottom: 18px;
+    box-shadow:
+      0 6px 16px rgba(255, 110, 50, 0.18),
+      inset 0 -2px 4px rgba(255,200,150,0.2);
+    border: 2px solid #fff;
   }
 
   .gauge-header {
@@ -165,9 +332,9 @@
   }
 
   .gauge-label {
-    font-size: 12px;
-    font-weight: 800;
-    color: #ff6b35;
+    font-size: 13px;
+    font-weight: 900;
+    color: #ff5722;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -175,29 +342,29 @@
 
   .gauge-heart {
     display: inline-block;
-    font-size: 18px;
+    font-size: 20px;
     animation: heartbeat 1.2s infinite;
   }
 
   @keyframes heartbeat {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.2); }
+    50% { transform: scale(1.25); }
   }
 
   .gauge-percent {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 900;
-    color: #ff6b35;
+    color: #ff5722;
     font-variant-numeric: tabular-nums;
   }
 
   .gauge-track {
-    height: 20px;
-    background: linear-gradient(90deg, #fff0e0, #ffe8d6);
-    border-radius: 10px;
+    height: 22px;
+    background: linear-gradient(90deg, #fff0d8, #ffe0b8);
+    border-radius: 12px;
     overflow: hidden;
     position: relative;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.08);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.1);
   }
 
   .gauge-fill {
@@ -205,12 +372,13 @@
     width: 0%;
     background: linear-gradient(90deg,
       #ffd93d 0%,
-      #ff8c42 50%,
-      #ff6b6b 100%);
-    border-radius: 10px;
+      #ff8c42 40%,
+      #ff5722 80%,
+      #e63946 100%);
+    border-radius: 12px;
     transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
-    box-shadow: 0 0 12px rgba(255, 140, 66, 0.6);
+    box-shadow: 0 0 12px rgba(255, 87, 34, 0.6);
   }
 
   .gauge-fill::after {
@@ -219,7 +387,7 @@
     inset: 0;
     background: linear-gradient(90deg,
       transparent 0%,
-      rgba(255,255,255,0.5) 50%,
+      rgba(255,255,255,0.6) 50%,
       transparent 100%);
     animation: shine 2s infinite;
   }
@@ -229,33 +397,22 @@
     100% { transform: translateX(100%); }
   }
 
-  .gauge-level {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 11px;
-    font-weight: 900;
-    color: #fff;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
-    right: 10px;
-    white-space: nowrap;
-  }
-
   .gauge-msg {
     text-align: center;
     font-size: 12px;
-    color: #999;
+    color: #a67040;
     margin-top: 6px;
-    font-weight: 600;
+    font-weight: 700;
   }
 
-  /* ===== 問題 ===== */
   .question {
-    font-size: 28px;
+    font-size: 30px;
     font-weight: 900;
-    margin: 10px 0 24px;
+    margin: 12px 0 24px;
     line-height: 1.4;
     text-align: center;
+    color: #3a1a0a;
+    text-shadow: 0 2px 4px rgba(255,255,255,0.8);
   }
 
   .options {
@@ -282,62 +439,67 @@
   .emoji-btn {
     aspect-ratio: 1;
     width: 100%;
-    background: #fff;
-    border: 3px solid #ffe8d6;
-    border-radius: 20px;
-    font-size: 44px;
+    background: linear-gradient(180deg, #fff, #fff5ec);
+    border: 3px solid #fff;
+    border-radius: 22px;
+    font-size: 46px;
     cursor: pointer;
     transition: all 0.15s;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 12px rgba(255, 140, 66, 0.1);
+    box-shadow:
+      0 6px 12px rgba(255, 120, 60, 0.2),
+      inset 0 -3px 6px rgba(255, 200, 150, 0.15);
   }
 
   .emoji-btn:active {
-    transform: scale(0.92);
-    background: #fff4e6;
-    border-color: #ff8c42;
+    transform: scale(0.92) translateY(3px);
+    box-shadow: 0 2px 6px rgba(255, 120, 60, 0.2);
   }
 
   .emoji-label {
     text-align: center;
     font-size: 11px;
-    color: #999;
+    color: #a67040;
+    font-weight: 700;
   }
 
   .option-btn {
-    background: #fff;
-    border: 3px solid #ffe8d6;
-    border-radius: 16px;
-    padding: 20px;
+    background: linear-gradient(180deg, #fff, #fff5ec);
+    border: 3px solid #fff;
+    border-radius: 18px;
+    padding: 22px;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
     transition: all 0.15s;
     text-align: center;
-    color: #333;
+    color: #3a1a0a;
+    box-shadow:
+      0 6px 12px rgba(255, 120, 60, 0.2),
+      inset 0 -3px 6px rgba(255, 200, 150, 0.15);
   }
 
   .option-btn:active {
-    transform: scale(0.97);
+    transform: scale(0.97) translateY(3px);
     background: linear-gradient(135deg, #ff8c42, #ffa94d);
     color: #fff;
-    border-color: #ff8c42;
+    box-shadow: 0 2px 6px rgba(255, 120, 60, 0.3);
   }
 
-  /* スライダー */
-  .slider-wrap {
-    padding: 20px 10px;
-  }
+  .slider-wrap { padding: 20px 10px; }
 
   .slider-value {
     text-align: center;
-    font-size: 56px;
+    font-size: 64px;
     font-weight: 900;
-    color: #ff6b35;
+    color: #ff5722;
     margin-bottom: 20px;
     font-variant-numeric: tabular-nums;
+    text-shadow:
+      0 2px 0 #ffb088,
+      0 4px 8px rgba(255,100,50,0.3);
   }
 
   .slider {
@@ -348,28 +510,30 @@
   }
 
   .slider::-webkit-slider-runnable-track {
-    height: 12px;
-    background: linear-gradient(90deg, #ffd93d, #ff6b6b);
-    border-radius: 6px;
+    height: 14px;
+    background: linear-gradient(90deg, #ffd93d, #ff5722);
+    border-radius: 7px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
   }
 
   .slider::-webkit-slider-thumb {
     appearance: none;
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     background: #fff;
-    border: 4px solid #ff8c42;
-    margin-top: -14px;
+    border: 5px solid #ff5722;
+    margin-top: -15px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
   }
 
   .slider-labels {
     display: flex;
     justify-content: space-between;
     font-size: 12px;
-    color: #999;
+    color: #a67040;
+    font-weight: 700;
     margin-top: 8px;
   }
 
@@ -377,15 +541,25 @@
   .tag-submit {
     margin-top: 24px;
     width: 100%;
-    background: linear-gradient(135deg, #ff8c42, #ffa94d);
+    background: linear-gradient(180deg, #ff8c42, #ff5722);
     color: #fff;
     border: none;
-    padding: 18px;
+    padding: 20px;
     border-radius: 999px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 900;
     cursor: pointer;
-    box-shadow: 0 6px 16px rgba(255, 140, 66, 0.4);
+    box-shadow:
+      0 6px 0 #c73a10,
+      0 10px 20px rgba(255, 87, 34, 0.4);
+  }
+
+  .slider-submit:active,
+  .tag-submit:active {
+    transform: translateY(4px);
+    box-shadow:
+      0 2px 0 #c73a10,
+      0 4px 10px rgba(255, 87, 34, 0.3);
   }
 
   .tag-grid {
@@ -395,97 +569,100 @@
   }
 
   .tag-btn {
-    background: #fff;
-    border: 3px solid #ffe8d6;
-    border-radius: 14px;
-    padding: 20px 10px;
+    background: linear-gradient(180deg, #fff, #fff5ec);
+    border: 3px solid #fff;
+    border-radius: 16px;
+    padding: 22px 10px;
     font-size: 16px;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
     transition: all 0.15s;
+    color: #3a1a0a;
+    box-shadow:
+      0 6px 12px rgba(255, 120, 60, 0.2),
+      inset 0 -3px 6px rgba(255, 200, 150, 0.15);
   }
 
   .tag-btn.selected {
     background: linear-gradient(135deg, #ff8c42, #ffa94d);
     color: #fff;
-    border-color: #ff8c42;
     transform: scale(0.97);
   }
 
   .skip {
     text-align: center;
     margin-top: 20px;
-    color: #bbb;
+    color: #b89060;
     font-size: 14px;
     cursor: pointer;
     padding: 10px;
+    font-weight: 600;
   }
 
-  /* ===== 褒め演出（ポップアップ） ===== */
+  /* 褒めポップアップ */
   .praise {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    background: rgba(255, 255, 255, 0.98);
-    backdrop-filter: blur(20px);
-    padding: 24px 40px;
-    border-radius: 24px;
-    box-shadow: 0 20px 60px rgba(255, 140, 66, 0.4);
+    background: #fff;
+    padding: 22px 40px;
+    border-radius: 28px;
+    box-shadow:
+      0 20px 60px rgba(255, 87, 34, 0.5),
+      inset 0 -4px 8px rgba(255,200,150,0.2);
     z-index: 200;
     pointer-events: none;
-    border: 3px solid #ffd93d;
+    border: 4px solid #ffd93d;
   }
 
-  .praise.show {
-    animation: praise-pop 1.2s ease;
-  }
+  .praise.show { animation: praise-pop 1.2s ease; }
 
   @keyframes praise-pop {
-    0% { transform: translate(-50%, -50%) scale(0) rotate(-10deg); opacity: 0; }
-    15% { transform: translate(-50%, -50%) scale(1.2) rotate(5deg); opacity: 1; }
+    0% { transform: translate(-50%, -50%) scale(0) rotate(-15deg); opacity: 0; }
+    15% { transform: translate(-50%, -50%) scale(1.3) rotate(5deg); opacity: 1; }
     30% { transform: translate(-50%, -50%) scale(1) rotate(0); }
     75% { transform: translate(-50%, -50%) scale(1) rotate(0); opacity: 1; }
     100% { transform: translate(-50%, -50%) scale(0.9) rotate(0); opacity: 0; }
   }
 
   .praise-emoji {
-    font-size: 48px;
+    font-size: 56px;
     text-align: center;
-    margin-bottom: 4px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
   }
 
   .praise-text {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 900;
-    color: #ff6b35;
+    color: #ff5722;
     text-align: center;
     white-space: nowrap;
+    text-shadow:
+      -2px -2px 0 #fff,
+      2px -2px 0 #fff,
+      -2px 2px 0 #fff,
+      2px 2px 0 #fff,
+      0 3px 0 #ffb088;
   }
 
-  /* ===== ゲージに飛ぶスター ===== */
   .flying-star {
     position: fixed;
-    font-size: 24px;
+    font-size: 28px;
     pointer-events: none;
     z-index: 150;
     transition: all 0.8s cubic-bezier(0.5, 0, 0.75, 0);
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
   }
 
-  /* ゲージのフラッシュ */
-  .gauge-wrap.charged {
-    animation: gauge-flash 0.5s ease;
-  }
+  .gauge-wrap.charged { animation: gauge-flash 0.5s ease; }
 
   @keyframes gauge-flash {
     0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.03); box-shadow: 0 8px 24px rgba(255, 140, 66, 0.5); }
+    50% { transform: scale(1.03); box-shadow: 0 8px 24px rgba(255, 87, 34, 0.5); }
   }
 
-  /* ゲージ満タン演出 */
-  .gauge-wrap.max {
-    animation: gauge-max 1s ease;
-  }
+  .gauge-wrap.max { animation: gauge-max 1s ease; }
 
   @keyframes gauge-max {
     0%, 100% { transform: scale(1); }
@@ -496,16 +673,28 @@
 
   /* ===== 完了画面 ===== */
   #complete {
-    background: linear-gradient(135deg, #ff6b6b 0%, #ff8c42 50%, #ffd93d 100%);
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 30%,
+        #fff5d0 0%,
+        #ffd93d 15%,
+        #ffa94d 35%,
+        #ff6b6b 65%,
+        #ff4757 90%,
+        #c92a2a 100%);
     color: #fff;
     justify-content: center;
     align-items: center;
     text-align: center;
+    overflow: hidden;
   }
 
   .trophy {
-    font-size: 100px;
+    font-size: 130px;
+    filter:
+      drop-shadow(0 10px 20px rgba(0,0,0,0.35))
+      drop-shadow(0 0 30px rgba(255,255,100,0.5));
     animation: trophy-wobble 1.4s infinite;
+    z-index: 2;
   }
 
   @keyframes trophy-wobble {
@@ -514,68 +703,85 @@
   }
 
   .complete-title {
-    font-size: 52px;
+    font-size: 60px;
     font-weight: 900;
-    text-shadow: 4px 4px 0 #c94040;
-    margin: 20px 0 10px;
+    color: #fff;
+    margin: 10px 0;
+    letter-spacing: -1px;
+    text-shadow:
+      -3px -3px 0 #ff5722,
+      3px -3px 0 #ff5722,
+      -3px 3px 0 #ff5722,
+      3px 3px 0 #ff5722,
+      0 6px 0 #c62828,
+      0 8px 0 #a02020,
+      0 12px 20px rgba(0,0,0,0.4);
+    z-index: 2;
   }
 
   .complete-sub {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 17px;
+    font-weight: 800;
     margin-bottom: 20px;
     opacity: 0.95;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    z-index: 2;
   }
 
   .ticket {
-    background: #fff;
-    color: #ff6b35;
-    padding: 25px 35px;
+    background: linear-gradient(180deg, #fff 0%, #fff5ec 100%);
+    color: #ff5722;
+    padding: 20px 40px;
     border-radius: 20px;
-    margin: 20px 0;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    margin: 14px 0;
+    box-shadow:
+      0 10px 30px rgba(0,0,0,0.3),
+      inset 0 -3px 6px rgba(255,200,150,0.2);
     position: relative;
+    z-index: 2;
   }
 
   .ticket::before, .ticket::after {
     content: "";
     position: absolute;
     top: 50%;
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
     background: #ff8c42;
     border-radius: 50%;
     transform: translateY(-50%);
   }
 
-  .ticket::before { left: -10px; }
-  .ticket::after { right: -10px; }
+  .ticket::before { left: -12px; }
+  .ticket::after { right: -12px; }
 
   .ticket-label {
     font-size: 12px;
-    font-weight: 700;
-    color: #999;
+    font-weight: 800;
+    color: #a67040;
   }
 
   .ticket-num {
-    font-size: 38px;
+    font-size: 42px;
     font-weight: 900;
     font-variant-numeric: tabular-nums;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
   }
 
   .schedule {
     background: rgba(0,0,0,0.3);
-    padding: 16px 24px;
-    border-radius: 12px;
-    margin: 20px 0;
+    padding: 16px 28px;
+    border-radius: 14px;
+    margin: 16px 0;
     backdrop-filter: blur(10px);
+    z-index: 2;
   }
 
   .schedule-label {
     font-size: 12px;
     opacity: 0.85;
     margin-bottom: 4px;
+    font-weight: 700;
   }
 
   .schedule-date {
@@ -584,71 +790,89 @@
   }
 
   .close-btn {
-    background: #fff;
-    color: #ff6b35;
-    padding: 16px 40px;
+    background: linear-gradient(180deg, #ffffff, #fff5ec);
+    color: #ff5722;
+    padding: 18px 48px;
     border-radius: 999px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 900;
     border: none;
-    margin-top: 20px;
+    margin-top: 16px;
     cursor: pointer;
+    box-shadow:
+      0 6px 0 #ffc77d,
+      0 10px 20px rgba(0,0,0,0.2);
+    z-index: 2;
   }
 
-  /* 紙吹雪 */
+  .close-btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 #ffc77d;
+  }
+
   .confetti {
     position: absolute;
     pointer-events: none;
-    font-size: 20px;
+    font-size: 24px;
     animation: confetti-fall 3s linear forwards;
     top: -30px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
   }
 
   @keyframes confetti-fall {
     to {
-      transform: translateY(100vh) rotate(720deg);
+      transform: translateY(110vh) rotate(720deg);
       opacity: 0;
     }
   }
 
-  /* デバッグ用リセット */
   .reset {
     position: fixed;
     bottom: 10px;
     right: 10px;
-    background: rgba(0,0,0,0.3);
-    color: #fff;
+    background: rgba(255,255,255,0.7);
+    color: #333;
     border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 10px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
     z-index: 1000;
     cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   }
 </style>
 </head>
 <body>
 <div class="app" id="app">
 
-  <!-- オープニング -->
   <div class="screen active" id="opening">
-    <div class="logo">🎰</div>
-    <div class="title">ゲキッチャ</div>
-    <div class="subtitle">激アツアンケート</div>
+    <div class="rays"></div>
+    <div class="bg-decor" id="bgDecor"></div>
+    <div class="slot-machine">🎰</div>
+    <div class="title-3d">ゲキッチャ</div>
+    <div class="subtitle-line">
+      <span class="subtitle-deco"></span>
+      <span>激アツアンケート</span>
+      <span class="subtitle-deco"></span>
+    </div>
     <div class="tagline">タップするたび応援ゲージが溜まる！</div>
-    <div class="badge">🎁 回答者だけ抽選参加できる</div>
+    <div class="gift-badge">
+      <span class="emoji">🎁</span>
+      <span>回答者だけ抽選参加できる</span>
+    </div>
     <button class="start-btn" onclick="startQuiz()">スタート ▶</button>
-    <div class="chance">✨ 総額5万円分のクーポン ✨</div>
+    <div class="coupon-ticket">
+      <span class="coupon-bolt">⚡</span>
+      <span>総額 <b>5万円分</b>のクーポン</span>
+    </div>
   </div>
 
-  <!-- 問題画面 -->
   <div class="screen quiz" id="quiz">
     <div class="top-bar">
       <span class="progress-text" id="progressText">1 / 8</span>
-      <span class="timer" id="timer">⏱ 30秒</span>
+      <span class="timer" id="timer">⏱ 0秒</span>
     </div>
-
-    <!-- 応援ゲージ -->
     <div class="gauge-wrap" id="gaugeWrap">
       <div class="gauge-header">
         <span class="gauge-label">
@@ -662,13 +886,11 @@
       </div>
       <div class="gauge-msg" id="gaugeMsg">タップで応援パワーを溜めよう！</div>
     </div>
-
     <div class="question" id="question"></div>
     <div class="options" id="options"></div>
     <div class="skip" id="skipBtn" onclick="skipQuestion()">答えない →</div>
   </div>
 
-  <!-- 完了画面 -->
   <div class="screen" id="complete">
     <div class="trophy">🏆</div>
     <div class="complete-title">ありがとう！</div>
@@ -681,13 +903,12 @@
       <div class="schedule-label">🎰 抽選ライブ配信</div>
       <div class="schedule-date" id="drawDate">4/27(月) 19:00</div>
     </div>
-    <div style="margin:10px 0 20px; font-size:14px; opacity:0.9;">
+    <div style="margin:10px 0 20px; font-size:14px; opacity:0.9; font-weight:700; z-index:2;">
       当選者だけにLINEで<br>特別な演出をお届け！
     </div>
     <button class="close-btn" onclick="closeApp()">LINEに戻る</button>
   </div>
 
-  <!-- 褒めポップアップ -->
   <div class="praise" id="praise">
     <div class="praise-emoji" id="praiseEmoji">👏</div>
     <div class="praise-text" id="praiseText">ナイス！</div>
@@ -697,68 +918,57 @@
 </div>
 
 <script>
-  // ================== アンケート ==================
+  function spawnBgDecor() {
+    const container = document.getElementById('bgDecor');
+    const items = ['🪙', '✨', '⭐', '🎊', '💛', '🟡', '🎉'];
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement('div');
+      el.className = 'bg-item';
+      el.textContent = items[Math.floor(Math.random() * items.length)];
+      el.style.left = Math.random() * 100 + '%';
+      el.style.top = Math.random() * 100 + '%';
+      el.style.fontSize = (18 + Math.random() * 20) + 'px';
+      el.style.animationDelay = (Math.random() * 5) + 's';
+      el.style.animationDuration = (3 + Math.random() * 4) + 's';
+      el.style.opacity = 0.5 + Math.random() * 0.5;
+      container.appendChild(el);
+    }
+  }
+  spawnBgDecor();
+
   const questions = [
-    {
-      type: 'emoji',
-      q: '今日、満足した？',
+    { type: 'emoji', q: '今日、満足した？',
       options: [
         { icon: '😍', label: '最高' },
         { icon: '😄', label: 'いい' },
         { icon: '😐', label: '普通' },
         { icon: '😣', label: 'うーん' }
-      ]
-    },
-    {
-      type: 'text',
-      q: '何回目の来店？',
-      options: ['初めて', '2〜3回目', '常連', '久しぶり']
-    },
-    {
-      type: 'emoji',
-      q: 'スタッフの対応は？',
+      ] },
+    { type: 'text', q: '何回目の来店？',
+      options: ['初めて', '2〜3回目', '常連', '久しぶり'] },
+    { type: 'emoji', q: 'スタッフの対応は？',
       options: [
         { icon: '🤩', label: '最高' },
         { icon: '😊', label: '良い' },
         { icon: '🙂', label: '普通' },
         { icon: '😑', label: '微妙' }
-      ]
-    },
-    {
-      type: 'slider',
-      q: '満足度を点数で！',
-      min: 0,
-      max: 100,
-      default: 85
-    },
-    {
-      type: 'tag',
-      q: '気に入ったのは？（複数OK）',
-      options: ['味', 'スピード', '接客', '価格', '雰囲気', 'ボリューム']
-    },
-    {
-      type: 'text',
-      q: 'また来たい？',
-      options: ['絶対来る', 'たぶん来る', '考える', '来ない']
-    },
-    {
-      type: 'emoji',
-      q: '友達にすすめたい？',
+      ] },
+    { type: 'slider', q: '満足度を点数で！', min: 0, max: 100, default: 85 },
+    { type: 'tag', q: '気に入ったのは？（複数OK）',
+      options: ['味', 'スピード', '接客', '価格', '雰囲気', 'ボリューム'] },
+    { type: 'text', q: 'また来たい？',
+      options: ['絶対来る', 'たぶん来る', '考える', '来ない'] },
+    { type: 'emoji', q: '友達にすすめたい？',
       options: [
         { icon: '📣', label: 'めっちゃ' },
         { icon: '👍', label: 'する' },
         { icon: '🤔', label: '悩む' },
         { icon: '🙅', label: 'しない' }
-      ]
-    },
-    {
-      type: 'text',
-      q: '次の来店予定は？',
-      options: ['今週中', '今月中', '来月以降', '未定']
-    }
+      ] },
+    { type: 'text', q: '次の来店予定は？',
+      options: ['今週中', '今月中', '来月以降', '未定'] }
   ];
 
-  // 褒めメッセージ（問題ごと）
   const praises = [
     { emoji: '👏', text: 'ナイス！' },
     { emoji: '💯', text: '正直でえらい！' },
@@ -770,7 +980,6 @@
     { emoji: '🏆', text: '完ぺき！' }
   ];
 
-  // ゲージレベルごとの応援メッセージ
   const gaugeMsgs = [
     'タップで応援パワーを溜めよう！',
     'いい調子！その調子！',
@@ -783,19 +992,16 @@
     '🎉 応援ゲージMAX達成！'
   ];
 
-  // ================== 状態 ==================
   let currentIndex = 0;
   let answers = [];
   let startTime = 0;
   let timerInterval = null;
 
-  // ================== 画面切替 ==================
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
   }
 
-  // ================== 開始 ==================
   function startQuiz() {
     currentIndex = 0;
     answers = [];
@@ -814,7 +1020,6 @@
     }, 500);
   }
 
-  // ================== ゲージ更新 ==================
   function updateGauge() {
     const percent = Math.round((currentIndex / questions.length) * 100);
     document.getElementById('gaugeFill').style.width = percent + '%';
@@ -823,7 +1028,6 @@
     document.getElementById('gaugeMsg').textContent = gaugeMsgs[msgIdx];
   }
 
-  // ================== 問題描画 ==================
   function renderQuestion() {
     const q = questions[currentIndex];
     document.getElementById('progressText').textContent = `${currentIndex + 1} / ${questions.length}`;
@@ -864,10 +1068,7 @@
       wrap.innerHTML = `
         <div class="slider-value" id="sliderVal">${q.default}</div>
         <input type="range" class="slider" id="slider" min="${q.min}" max="${q.max}" value="${q.default}">
-        <div class="slider-labels">
-          <span>${q.min}点</span>
-          <span>${q.max}点</span>
-        </div>
+        <div class="slider-labels"><span>${q.min}点</span><span>${q.max}点</span></div>
         <button class="slider-submit" id="sliderSubmit">決定 →</button>
       `;
       opts.appendChild(wrap);
@@ -904,25 +1105,20 @@
     }
   }
 
-  // ================== 回答選択 ==================
   function selectAnswer(answer, event, btnEl) {
     answers.push({ q: questions[currentIndex].q, a: answer });
 
-    // ボタンの位置を取得（タップ起点）
     const rect = btnEl ? btnEl.getBoundingClientRect() : null;
     const startX = rect ? rect.left + rect.width / 2 : (event.clientX || window.innerWidth / 2);
     const startY = rect ? rect.top + rect.height / 2 : (event.clientY || window.innerHeight / 2);
 
-    // ゲージの位置（終点）
     const gauge = document.getElementById('gaugeFill');
     const gRect = gauge.getBoundingClientRect();
     const endX = gRect.left + gRect.width * ((currentIndex + 1) / questions.length) - 8;
     const endY = gRect.top + gRect.height / 2;
 
-    // スターを飛ばす
     flyStars(startX, startY, endX, endY);
 
-    // ゲージ更新（少し遅らせてスター到着と合わせる）
     setTimeout(() => {
       currentIndex++;
       updateGauge();
@@ -936,10 +1132,8 @@
         gaugeWrap.classList.add('charged');
       }
 
-      // 褒めポップアップ
       showPraise(currentIndex - 1);
 
-      // 次へ or 完了
       setTimeout(() => {
         if (currentIndex >= questions.length) {
           finishQuiz();
@@ -950,10 +1144,9 @@
     }, 500);
   }
 
-  // ================== スター飛ばし ==================
   function flyStars(sx, sy, ex, ey) {
     const icons = ['⭐', '✨', '💫', '❤️', '🌟'];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
       const s = document.createElement('div');
       s.className = 'flying-star';
       s.textContent = icons[i % icons.length];
@@ -961,7 +1154,6 @@
       s.style.top = sy + 'px';
       document.body.appendChild(s);
 
-      // ランダムな中間点で弧を描く
       const offsetX = (Math.random() - 0.5) * 80;
 
       setTimeout(() => {
@@ -975,7 +1167,6 @@
     }
   }
 
-  // ================== 褒めポップアップ ==================
   function showPraise(idx) {
     const p = praises[Math.min(idx, praises.length - 1)];
     const el = document.getElementById('praise');
@@ -986,7 +1177,6 @@
     el.classList.add('show');
   }
 
-  // ================== スキップ ==================
   function skipQuestion() {
     answers.push({ q: questions[currentIndex].q, a: '(skip)' });
     currentIndex++;
@@ -998,21 +1188,15 @@
     }
   }
 
-  // ================== 完了 ==================
   function finishQuiz() {
     clearInterval(timerInterval);
-
-    // 抽選券
     const num = String(Math.floor(Math.random() * 99999)).padStart(5, '0');
     document.getElementById('ticketNum').textContent = `#${num}`;
-
-    // 抽選日
     const d = new Date();
     d.setDate(d.getDate() + 3);
     const days = ['日', '月', '火', '水', '木', '金', '土'];
     document.getElementById('drawDate').textContent =
       `${d.getMonth() + 1}/${d.getDate()}(${days[d.getDay()]}) 19:00`;
-
     setTimeout(() => {
       showScreen('complete');
       launchConfetti();
@@ -1020,10 +1204,9 @@
     }, 600);
   }
 
-  // ================== 紙吹雪 ==================
   function launchConfetti() {
-    const icons = ['🎉', '🎊', '⭐', '✨', '💝', '🏆', '❤️'];
-    for (let i = 0; i < 30; i++) {
+    const icons = ['🎉', '🎊', '⭐', '✨', '💝', '🏆', '❤️', '🪙'];
+    for (let i = 0; i < 40; i++) {
       setTimeout(() => {
         const c = document.createElement('div');
         c.className = 'confetti';
@@ -1031,9 +1214,10 @@
         c.style.left = Math.random() * 100 + '%';
         c.style.animationDuration = (2 + Math.random() * 2) + 's';
         c.style.animationDelay = Math.random() * 0.5 + 's';
+        c.style.fontSize = (18 + Math.random() * 16) + 'px';
         document.getElementById('complete').appendChild(c);
         setTimeout(() => c.remove(), 4000);
-      }, i * 80);
+      }, i * 60);
     }
   }
 
