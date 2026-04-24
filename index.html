@@ -748,19 +748,25 @@
         #ff4757 90%,
         #c92a2a 100%);
     color: #fff;
-    justify-content: center;
-    align-items: center;
     text-align: center;
     overflow: hidden;
+    display: grid;
+    grid-template-rows: 1fr auto auto auto auto auto auto 1fr;
+    padding: 14px clamp(14px, 5vw, 22px);
+    gap: clamp(6px, 1.5vh, 12px);
+    align-items: center;
+    justify-items: center;
   }
 
   .trophy {
-    font-size: 130px;
+    font-size: clamp(60px, 18vw, 100px);
+    line-height: 1;
     filter:
       drop-shadow(0 10px 20px rgba(0,0,0,0.35))
       drop-shadow(0 0 30px rgba(255,255,100,0.5));
     animation: trophy-wobble 1.4s infinite;
     z-index: 2;
+    align-self: end;
   }
 
   @keyframes trophy-wobble {
@@ -768,107 +774,113 @@
     50% { transform: rotate(5deg) scale(1.1); }
   }
 
-  .complete-title {
-    font-size: 60px;
-    font-weight: 900;
-    color: #fff;
-    margin: 10px 0;
-    letter-spacing: -1px;
-    text-shadow:
-      -3px -3px 0 #ff5722,
-      3px -3px 0 #ff5722,
-      -3px 3px 0 #ff5722,
-      3px 3px 0 #ff5722,
-      0 6px 0 #c62828,
-      0 8px 0 #a02020,
-      0 12px 20px rgba(0,0,0,0.4);
+  .thanks-img {
+    width: min(86%, 400px);
+    height: auto;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.35));
+    animation: titleFloat 3s ease-in-out infinite;
     z-index: 2;
   }
 
   .complete-sub {
-    font-size: 17px;
+    font-size: clamp(13px, 4vw, 16px);
     font-weight: 800;
-    margin-bottom: 20px;
     opacity: 0.95;
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     z-index: 2;
+    white-space: nowrap;
   }
 
   .ticket {
     background: linear-gradient(180deg, #fff 0%, #fff5ec 100%);
     color: #ff5722;
-    padding: 20px 40px;
-    border-radius: 20px;
-    margin: 14px 0;
+    padding: clamp(12px, 2.5vh, 18px) clamp(28px, 8vw, 40px);
+    border-radius: 18px;
     box-shadow:
       0 10px 30px rgba(0,0,0,0.3),
       inset 0 -3px 6px rgba(255,200,150,0.2);
     position: relative;
     z-index: 2;
+    white-space: nowrap;
   }
 
   .ticket::before, .ticket::after {
     content: "";
     position: absolute;
     top: 50%;
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
     background: #ff8c42;
     border-radius: 50%;
     transform: translateY(-50%);
   }
 
-  .ticket::before { left: -12px; }
-  .ticket::after { right: -12px; }
+  .ticket::before { left: -11px; }
+  .ticket::after { right: -11px; }
 
   .ticket-label {
-    font-size: 12px;
+    font-size: clamp(11px, 3vw, 12px);
     font-weight: 800;
     color: #a67040;
+    white-space: nowrap;
   }
 
   .ticket-num {
-    font-size: 42px;
+    font-size: clamp(32px, 10vw, 42px);
     font-weight: 900;
     font-variant-numeric: tabular-nums;
     letter-spacing: 3px;
+    white-space: nowrap;
+    line-height: 1.1;
   }
 
   .schedule {
     background: rgba(0,0,0,0.3);
-    padding: 16px 28px;
-    border-radius: 14px;
-    margin: 16px 0;
+    padding: clamp(10px, 2vh, 14px) clamp(20px, 7vw, 28px);
+    border-radius: 12px;
     backdrop-filter: blur(10px);
     z-index: 2;
+    white-space: nowrap;
   }
 
   .schedule-label {
-    font-size: 12px;
+    font-size: clamp(10px, 3vw, 12px);
     opacity: 0.85;
-    margin-bottom: 4px;
+    margin-bottom: 3px;
     font-weight: 700;
+    white-space: nowrap;
   }
 
   .schedule-date {
-    font-size: 22px;
+    font-size: clamp(18px, 5.5vw, 22px);
     font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .note-text {
+    font-size: clamp(12px, 3.6vw, 14px);
+    font-weight: 700;
+    opacity: 0.9;
+    z-index: 2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.25);
+    white-space: nowrap;
   }
 
   .close-btn {
     background: linear-gradient(180deg, #ffffff, #fff5ec);
     color: #ff5722;
-    padding: 18px 48px;
+    padding: clamp(14px, 2.4vh, 18px) clamp(32px, 11vw, 48px);
     border-radius: 999px;
-    font-size: 18px;
+    font-size: clamp(15px, 4.5vw, 18px);
     font-weight: 900;
     border: none;
-    margin-top: 16px;
     cursor: pointer;
     box-shadow:
       0 6px 0 #ffc77d,
       0 10px 20px rgba(0,0,0,0.2);
     z-index: 2;
+    white-space: nowrap;
+    align-self: start;
   }
 
   .close-btn:active {
@@ -973,7 +985,7 @@
 
   <div class="screen" id="complete">
     <div class="trophy">🏆</div>
-    <div class="complete-title">ありがとう！</div>
+    <img src="thanks_logo.png" alt="ありがとう" class="thanks-img">
     <div class="complete-sub">あなたの応援が届きました 💝</div>
     <div class="ticket">
       <div class="ticket-label">あなたの抽選券</div>
@@ -983,9 +995,7 @@
       <div class="schedule-label">🎰 抽選ライブ配信</div>
       <div class="schedule-date" id="drawDate">4/27(月) 19:00</div>
     </div>
-    <div style="margin:10px 0 20px; font-size:14px; opacity:0.9; font-weight:700; z-index:2;">
-      当選者だけにLINEで<br>特別な演出をお届け！
-    </div>
+    <div class="note-text">🎊 当選者にはLINEで特別演出が届く</div>
     <button class="close-btn" onclick="closeApp()">LINEに戻る</button>
   </div>
 
@@ -995,7 +1005,7 @@
   </div>
 
   <button class="reset" onclick="location.reload()">リセット</button>
-  <div class="version">v0.6.0 · 2026.04.24</div>
+  <div class="version">v0.7.0 · 2026.04.24</div>
 </div>
 
 <script>
