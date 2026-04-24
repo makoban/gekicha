@@ -981,6 +981,26 @@
     font-variant-numeric: tabular-nums;
     pointer-events: none;
   }
+
+  .info-btn {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    color: #ff5722;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 800;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    white-space: nowrap;
+  }
+
+  .info-btn:active {
+    transform: translateY(2px);
+  }
 </style>
 </head>
 <body>
@@ -1048,8 +1068,9 @@
     <div class="praise-text" id="praiseText">ナイス！</div>
   </div>
 
+  <a href="explain.html" class="info-btn">📖 サービスについて</a>
   <button class="reset" onclick="location.reload()">リセット</button>
-  <div class="version">v0.8.1 · 2026.04.24</div>
+  <div class="version">v0.9.0 · 2026.04.24</div>
 </div>
 
 <script>
