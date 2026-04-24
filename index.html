@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🎰 ゲキッチャ - 激アツアンケート</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+  }
+
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+    background: #000;
+  }
+
+  .app {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    transform: translateX(30px);
+  }
+
+  .screen.active {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  /* ===== オープニング ===== */
+  #opening {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ffa94d 50%, #ffd93d 100%);
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+  }
+
+  .logo {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: bounce 1.2s infinite;
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0) rotate(-5deg); }
+    50% { transform: translateY(-15px) rotate(5deg); }
+  }
+
+  .title {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-shadow: 3px 3px 0 #d94040;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    opacity: 0.95;
+  }
+
+  .tagline {
+    font-size: 14px;
+    opacity: 0.85;
+    margin-bottom: 40px;
+  }
+
+  .badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.25);
+    padding: 8px 20px;
+    border-radius: 999px;
+    font-size: 13px;
+    margin-bottom: 40px;
+    backdrop-filter: blur(10px);
+  }
+
+  .start-btn {
+    background: #fff;
+    color: #ff6b6b;
+    padding: 22px 60px;
+    border-radius: 999px;
+    font-size: 24px;
+    font-weight: 900;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+
+  .chance {
+    margin-top: 30px;
+    font-size: 13px;
+    opacity: 0.85;
+  }
+
+  /* ===== アンケート画面 ===== */
+  .quiz {
+    background: linear-gradient(180deg, #fffbf5 0%, #fff5ec 100%);
+    color: #2a2a2a;
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #666;
+  }
+
+  .progress-text {
+    font-weight: 700;
+    color: #ff8c42;
+  }
+
+  .timer {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #999;
+  }
+
+  /* === 応援ゲージ（ここが主役） === */
+  .gauge-wrap {
+    background: #fff;
+    border-radius: 18px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(255, 140, 66, 0.15);
+    border: 2px solid #ffe8d6;
+  }
+
+  .gauge-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .gauge-label {
+    font-size: 12px;
+    font-weight: 800;
+    color: #ff6b35;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .gauge-heart {
+    display: inline-block;
+    font-size: 18px;
+    animation: heartbeat 1.2s infinite;
+  }
+
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+  }
+
+  .gauge-percent {
+    font-size: 14px;
+    font-weight: 900;
+    color: #ff6b35;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .gauge-track {
+    height: 20px;
+    background: linear-gradient(90deg, #fff0e0, #ffe8d6);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.08);
+  }
+
+  .gauge-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg,
+      #ffd93d 0%,
+      #ff8c42 50%,
+      #ff6b6b 100%);
+    border-radius: 10px;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    box-shadow: 0 0 12px rgba(255, 140, 66, 0.6);
+  }
+
+  .gauge-fill::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255,255,255,0.5) 50%,
+      transparent 100%);
+    animation: shine 2s infinite;
+  }
+
+  @keyframes shine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .gauge-level {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 11px;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+    right: 10px;
+    white-space: nowrap;
+  }
+
+  .gauge-msg {
+    text-align: center;
+    font-size: 12px;
+    color: #999;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  /* ===== 問題 ===== */
+  .question {
+    font-size: 28px;
+    font-weight: 900;
+    margin: 10px 0 24px;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  .options {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    justify-content: center;
+  }
+
+  .emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+
+  .emoji-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .emoji-btn {
+    aspect-ratio: 1;
+    width: 100%;
+    background: #fff;
+    border: 3px solid #ffe8d6;
+    border-radius: 20px;
+    font-size: 44px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(255, 140, 66, 0.1);
+  }
+
+  .emoji-btn:active {
+    transform: scale(0.92);
+    background: #fff4e6;
+    border-color: #ff8c42;
+  }
+
+  .emoji-label {
+    text-align: center;
+    font-size: 11px;
+    color: #999;
+  }
+
+  .option-btn {
+    background: #fff;
+    border: 3px solid #ffe8d6;
+    border-radius: 16px;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    color: #333;
+  }
+
+  .option-btn:active {
+    transform: scale(0.97);
+    background: linear-gradient(135deg, #ff8c42, #ffa94d);
+    color: #fff;
+    border-color: #ff8c42;
+  }
+
+  /* スライダー */
+  .slider-wrap {
+    padding: 20px 10px;
+  }
+
+  .slider-value {
+    text-align: center;
+    font-size: 56px;
+    font-weight: 900;
+    color: #ff6b35;
+    margin-bottom: 20px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .slider {
+    width: 100%;
+    height: 40px;
+    appearance: none;
+    background: transparent;
+  }
+
+  .slider::-webkit-slider-runnable-track {
+    height: 12px;
+    background: linear-gradient(90deg, #ffd93d, #ff6b6b);
+    border-radius: 6px;
+  }
+
+  .slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    border: 4px solid #ff8c42;
+    margin-top: -14px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #999;
+    margin-top: 8px;
+  }
+
+  .slider-submit,
+  .tag-submit {
+    margin-top: 24px;
+    width: 100%;
+    background: linear-gradient(135deg, #ff8c42, #ffa94d);
+    color: #fff;
+    border: none;
+    padding: 18px;
+    border-radius: 999px;
+    font-size: 18px;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(255, 140, 66, 0.4);
+  }
+
+  .tag-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .tag-btn {
+    background: #fff;
+    border: 3px solid #ffe8d6;
+    border-radius: 14px;
+    padding: 20px 10px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .tag-btn.selected {
+    background: linear-gradient(135deg, #ff8c42, #ffa94d);
+    color: #fff;
+    border-color: #ff8c42;
+    transform: scale(0.97);
+  }
+
+  .skip {
+    text-align: center;
+    margin-top: 20px;
+    color: #bbb;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 10px;
+  }
+
+  /* ===== 褒め演出（ポップアップ） ===== */
+  .praise {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    padding: 24px 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(255, 140, 66, 0.4);
+    z-index: 200;
+    pointer-events: none;
+    border: 3px solid #ffd93d;
+  }
+
+  .praise.show {
+    animation: praise-pop 1.2s ease;
+  }
+
+  @keyframes praise-pop {
+    0% { transform: translate(-50%, -50%) scale(0) rotate(-10deg); opacity: 0; }
+    15% { transform: translate(-50%, -50%) scale(1.2) rotate(5deg); opacity: 1; }
+    30% { transform: translate(-50%, -50%) scale(1) rotate(0); }
+    75% { transform: translate(-50%, -50%) scale(1) rotate(0); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(0.9) rotate(0); opacity: 0; }
+  }
+
+  .praise-emoji {
+    font-size: 48px;
+    text-align: center;
+    margin-bottom: 4px;
+  }
+
+  .praise-text {
+    font-size: 24px;
+    font-weight: 900;
+    color: #ff6b35;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  /* ===== ゲージに飛ぶスター ===== */
+  .flying-star {
+    position: fixed;
+    font-size: 24px;
+    pointer-events: none;
+    z-index: 150;
+    transition: all 0.8s cubic-bezier(0.5, 0, 0.75, 0);
+  }
+
+  /* ゲージのフラッシュ */
+  .gauge-wrap.charged {
+    animation: gauge-flash 0.5s ease;
+  }
+
+  @keyframes gauge-flash {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); box-shadow: 0 8px 24px rgba(255, 140, 66, 0.5); }
+  }
+
+  /* ゲージ満タン演出 */
+  .gauge-wrap.max {
+    animation: gauge-max 1s ease;
+  }
+
+  @keyframes gauge-max {
+    0%, 100% { transform: scale(1); }
+    25% { transform: scale(1.08) rotate(-1deg); }
+    50% { transform: scale(1.08) rotate(1deg); }
+    75% { transform: scale(1.08) rotate(-1deg); }
+  }
+
+  /* ===== 完了画面 ===== */
+  #complete {
+    background: linear-gradient(135deg, #ff6b6b 0%, #ff8c42 50%, #ffd93d 100%);
+    color: #fff;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .trophy {
+    font-size: 100px;
+    animation: trophy-wobble 1.4s infinite;
+  }
+
+  @keyframes trophy-wobble {
+    0%, 100% { transform: rotate(-5deg) scale(1); }
+    50% { transform: rotate(5deg) scale(1.1); }
+  }
+
+  .complete-title {
+    font-size: 52px;
+    font-weight: 900;
+    text-shadow: 4px 4px 0 #c94040;
+    margin: 20px 0 10px;
+  }
+
+  .complete-sub {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    opacity: 0.95;
+  }
+
+  .ticket {
+    background: #fff;
+    color: #ff6b35;
+    padding: 25px 35px;
+    border-radius: 20px;
+    margin: 20px 0;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    position: relative;
+  }
+
+  .ticket::before, .ticket::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    background: #ff8c42;
+    border-radius: 50%;
+    transform: translateY(-50%);
+  }
+
+  .ticket::before { left: -10px; }
+  .ticket::after { right: -10px; }
+
+  .ticket-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #999;
+  }
+
+  .ticket-num {
+    font-size: 38px;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 2px;
+  }
+
+  .schedule {
+    background: rgba(0,0,0,0.3);
+    padding: 16px 24px;
+    border-radius: 12px;
+    margin: 20px 0;
+    backdrop-filter: blur(10px);
+  }
+
+  .schedule-label {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-bottom: 4px;
+  }
+
+  .schedule-date {
+    font-size: 22px;
+    font-weight: 900;
+  }
+
+  .close-btn {
+    background: #fff;
+    color: #ff6b35;
+    padding: 16px 40px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 900;
+    border: none;
+    margin-top: 20px;
+    cursor: pointer;
+  }
+
+  /* 紙吹雪 */
+  .confetti {
+    position: absolute;
+    pointer-events: none;
+    font-size: 20px;
+    animation: confetti-fall 3s linear forwards;
+    top: -30px;
+  }
+
+  @keyframes confetti-fall {
+    to {
+      transform: translateY(100vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
+
+  /* デバッグ用リセット */
+  .reset {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.3);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 10px;
+    z-index: 1000;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+  <!-- オープニング -->
+  <div class="screen active" id="opening">
+    <div class="logo">🎰</div>
+    <div class="title">ゲキッチャ</div>
+    <div class="subtitle">激アツアンケート</div>
+    <div class="tagline">タップするたび応援ゲージが溜まる！</div>
+    <div class="badge">🎁 回答者だけ抽選参加できる</div>
+    <button class="start-btn" onclick="startQuiz()">スタート ▶</button>
+    <div class="chance">✨ 総額5万円分のクーポン ✨</div>
+  </div>
+
+  <!-- 問題画面 -->
+  <div class="screen quiz" id="quiz">
+    <div class="top-bar">
+      <span class="progress-text" id="progressText">1 / 8</span>
+      <span class="timer" id="timer">⏱ 30秒</span>
+    </div>
+
+    <!-- 応援ゲージ -->
+    <div class="gauge-wrap" id="gaugeWrap">
+      <div class="gauge-header">
+        <span class="gauge-label">
+          <span class="gauge-heart">❤️</span>
+          応援ゲージ
+        </span>
+        <span class="gauge-percent" id="gaugePercent">0%</span>
+      </div>
+      <div class="gauge-track">
+        <div class="gauge-fill" id="gaugeFill"></div>
+      </div>
+      <div class="gauge-msg" id="gaugeMsg">タップで応援パワーを溜めよう！</div>
+    </div>
+
+    <div class="question" id="question"></div>
+    <div class="options" id="options"></div>
+    <div class="skip" id="skipBtn" onclick="skipQuestion()">答えない →</div>
+  </div>
+
+  <!-- 完了画面 -->
+  <div class="screen" id="complete">
+    <div class="trophy">🏆</div>
+    <div class="complete-title">ありがとう！</div>
+    <div class="complete-sub">あなたの応援が届きました 💝</div>
+    <div class="ticket">
+      <div class="ticket-label">あなたの抽選券</div>
+      <div class="ticket-num" id="ticketNum">#00000</div>
+    </div>
+    <div class="schedule">
+      <div class="schedule-label">🎰 抽選ライブ配信</div>
+      <div class="schedule-date" id="drawDate">4/27(月) 19:00</div>
+    </div>
+    <div style="margin:10px 0 20px; font-size:14px; opacity:0.9;">
+      当選者だけにLINEで<br>特別な演出をお届け！
+    </div>
+    <button class="close-btn" onclick="closeApp()">LINEに戻る</button>
+  </div>
+
+  <!-- 褒めポップアップ -->
+  <div class="praise" id="praise">
+    <div class="praise-emoji" id="praiseEmoji">👏</div>
+    <div class="praise-text" id="praiseText">ナイス！</div>
+  </div>
+
+  <button class="reset" onclick="location.reload()">リセット</button>
+</div>
+
+<script>
+  // ================== アンケート ==================
+  const questions = [
+    {
+      type: 'emoji',
+      q: '今日、満足した？',
+      options: [
+        { icon: '😍', label: '最高' },
+        { icon: '😄', label: 'いい' },
+        { icon: '😐', label: '普通' },
+        { icon: '😣', label: 'うーん' }
+      ]
+    },
+    {
+      type: 'text',
+      q: '何回目の来店？',
+      options: ['初めて', '2〜3回目', '常連', '久しぶり']
+    },
+    {
+      type: 'emoji',
+      q: 'スタッフの対応は？',
+      options: [
+        { icon: '🤩', label: '最高' },
+        { icon: '😊', label: '良い' },
+        { icon: '🙂', label: '普通' },
+        { icon: '😑', label: '微妙' }
+      ]
+    },
+    {
+      type: 'slider',
+      q: '満足度を点数で！',
+      min: 0,
+      max: 100,
+      default: 85
+    },
+    {
+      type: 'tag',
+      q: '気に入ったのは？（複数OK）',
+      options: ['味', 'スピード', '接客', '価格', '雰囲気', 'ボリューム']
+    },
+    {
+      type: 'text',
+      q: 'また来たい？',
+      options: ['絶対来る', 'たぶん来る', '考える', '来ない']
+    },
+    {
+      type: 'emoji',
+      q: '友達にすすめたい？',
+      options: [
+        { icon: '📣', label: 'めっちゃ' },
+        { icon: '👍', label: 'する' },
+        { icon: '🤔', label: '悩む' },
+        { icon: '🙅', label: 'しない' }
+      ]
+    },
+    {
+      type: 'text',
+      q: '次の来店予定は？',
+      options: ['今週中', '今月中', '来月以降', '未定']
+    }
+  ];
+
+  // 褒めメッセージ（問題ごと）
+  const praises = [
+    { emoji: '👏', text: 'ナイス！' },
+    { emoji: '💯', text: '正直でえらい！' },
+    { emoji: '🌟', text: 'ありがとう！' },
+    { emoji: '💪', text: 'いいね〜！' },
+    { emoji: '🎉', text: '最高！' },
+    { emoji: '✨', text: 'さすが！' },
+    { emoji: '😍', text: 'うれしい！' },
+    { emoji: '🏆', text: '完ぺき！' }
+  ];
+
+  // ゲージレベルごとの応援メッセージ
+  const gaugeMsgs = [
+    'タップで応援パワーを溜めよう！',
+    'いい調子！その調子！',
+    'ゲージ順調に上昇中〜🔥',
+    'もうすぐ半分！頑張って！',
+    'ゲージ半分突破！🎊',
+    'ラストスパート！',
+    'あと少しで満タン！',
+    'もう一息！ファイト！',
+    '🎉 応援ゲージMAX達成！'
+  ];
+
+  // ================== 状態 ==================
+  let currentIndex = 0;
+  let answers = [];
+  let startTime = 0;
+  let timerInterval = null;
+
+  // ================== 画面切替 ==================
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+
+  // ================== 開始 ==================
+  function startQuiz() {
+    currentIndex = 0;
+    answers = [];
+    startTime = Date.now();
+    updateGauge();
+    showScreen('quiz');
+    startTimer();
+    renderQuestion();
+  }
+
+  function startTimer() {
+    const timerEl = document.getElementById('timer');
+    timerInterval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - startTime) / 1000);
+      timerEl.textContent = `⏱ ${elapsed}秒`;
+    }, 500);
+  }
+
+  // ================== ゲージ更新 ==================
+  function updateGauge() {
+    const percent = Math.round((currentIndex / questions.length) * 100);
+    document.getElementById('gaugeFill').style.width = percent + '%';
+    document.getElementById('gaugePercent').textContent = percent + '%';
+    const msgIdx = Math.min(Math.floor(currentIndex), gaugeMsgs.length - 1);
+    document.getElementById('gaugeMsg').textContent = gaugeMsgs[msgIdx];
+  }
+
+  // ================== 問題描画 ==================
+  function renderQuestion() {
+    const q = questions[currentIndex];
+    document.getElementById('progressText').textContent = `${currentIndex + 1} / ${questions.length}`;
+    document.getElementById('question').textContent = q.q;
+
+    const opts = document.getElementById('options');
+    opts.innerHTML = '';
+
+    if (q.type === 'emoji') {
+      const grid = document.createElement('div');
+      grid.className = 'emoji-grid';
+      q.options.forEach((opt) => {
+        const col = document.createElement('div');
+        col.className = 'emoji-col';
+        const btn = document.createElement('button');
+        btn.className = 'emoji-btn';
+        btn.textContent = opt.icon;
+        btn.onclick = (e) => selectAnswer(opt.icon + ' ' + opt.label, e, btn);
+        const lbl = document.createElement('div');
+        lbl.className = 'emoji-label';
+        lbl.textContent = opt.label;
+        col.appendChild(btn);
+        col.appendChild(lbl);
+        grid.appendChild(col);
+      });
+      opts.appendChild(grid);
+    } else if (q.type === 'text') {
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-btn';
+        btn.textContent = opt;
+        btn.onclick = (e) => selectAnswer(opt, e, btn);
+        opts.appendChild(btn);
+      });
+    } else if (q.type === 'slider') {
+      const wrap = document.createElement('div');
+      wrap.className = 'slider-wrap';
+      wrap.innerHTML = `
+        <div class="slider-value" id="sliderVal">${q.default}</div>
+        <input type="range" class="slider" id="slider" min="${q.min}" max="${q.max}" value="${q.default}">
+        <div class="slider-labels">
+          <span>${q.min}点</span>
+          <span>${q.max}点</span>
+        </div>
+        <button class="slider-submit" id="sliderSubmit">決定 →</button>
+      `;
+      opts.appendChild(wrap);
+      const slider = document.getElementById('slider');
+      const val = document.getElementById('sliderVal');
+      slider.oninput = () => val.textContent = slider.value;
+      const sub = document.getElementById('sliderSubmit');
+      sub.onclick = (e) => selectAnswer(`${slider.value}点`, e, sub);
+    } else if (q.type === 'tag') {
+      const grid = document.createElement('div');
+      grid.className = 'tag-grid';
+      const selected = new Set();
+      q.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'tag-btn';
+        btn.textContent = opt;
+        btn.onclick = () => {
+          if (selected.has(opt)) {
+            selected.delete(opt);
+            btn.classList.remove('selected');
+          } else {
+            selected.add(opt);
+            btn.classList.add('selected');
+          }
+        };
+        grid.appendChild(btn);
+      });
+      const submit = document.createElement('button');
+      submit.className = 'tag-submit';
+      submit.textContent = '決定 →';
+      submit.onclick = (e) => selectAnswer(Array.from(selected).join(', ') || 'なし', e, submit);
+      opts.appendChild(grid);
+      opts.appendChild(submit);
+    }
+  }
+
+  // ================== 回答選択 ==================
+  function selectAnswer(answer, event, btnEl) {
+    answers.push({ q: questions[currentIndex].q, a: answer });
+
+    // ボタンの位置を取得（タップ起点）
+    const rect = btnEl ? btnEl.getBoundingClientRect() : null;
+    const startX = rect ? rect.left + rect.width / 2 : (event.clientX || window.innerWidth / 2);
+    const startY = rect ? rect.top + rect.height / 2 : (event.clientY || window.innerHeight / 2);
+
+    // ゲージの位置（終点）
+    const gauge = document.getElementById('gaugeFill');
+    const gRect = gauge.getBoundingClientRect();
+    const endX = gRect.left + gRect.width * ((currentIndex + 1) / questions.length) - 8;
+    const endY = gRect.top + gRect.height / 2;
+
+    // スターを飛ばす
+    flyStars(startX, startY, endX, endY);
+
+    // ゲージ更新（少し遅らせてスター到着と合わせる）
+    setTimeout(() => {
+      currentIndex++;
+      updateGauge();
+
+      const gaugeWrap = document.getElementById('gaugeWrap');
+      gaugeWrap.classList.remove('charged', 'max');
+      void gaugeWrap.offsetWidth;
+      if (currentIndex >= questions.length) {
+        gaugeWrap.classList.add('max');
+      } else {
+        gaugeWrap.classList.add('charged');
+      }
+
+      // 褒めポップアップ
+      showPraise(currentIndex - 1);
+
+      // 次へ or 完了
+      setTimeout(() => {
+        if (currentIndex >= questions.length) {
+          finishQuiz();
+        } else {
+          renderQuestion();
+        }
+      }, 900);
+    }, 500);
+  }
+
+  // ================== スター飛ばし ==================
+  function flyStars(sx, sy, ex, ey) {
+    const icons = ['⭐', '✨', '💫', '❤️', '🌟'];
+    for (let i = 0; i < 5; i++) {
+      const s = document.createElement('div');
+      s.className = 'flying-star';
+      s.textContent = icons[i % icons.length];
+      s.style.left = sx + 'px';
+      s.style.top = sy + 'px';
+      document.body.appendChild(s);
+
+      // ランダムな中間点で弧を描く
+      const offsetX = (Math.random() - 0.5) * 80;
+
+      setTimeout(() => {
+        s.style.left = ex + offsetX + 'px';
+        s.style.top = ey + 'px';
+        s.style.transform = 'scale(0.3)';
+        s.style.opacity = '0.5';
+      }, 50 + i * 50);
+
+      setTimeout(() => s.remove(), 1000);
+    }
+  }
+
+  // ================== 褒めポップアップ ==================
+  function showPraise(idx) {
+    const p = praises[Math.min(idx, praises.length - 1)];
+    const el = document.getElementById('praise');
+    document.getElementById('praiseEmoji').textContent = p.emoji;
+    document.getElementById('praiseText').textContent = p.text;
+    el.classList.remove('show');
+    void el.offsetWidth;
+    el.classList.add('show');
+  }
+
+  // ================== スキップ ==================
+  function skipQuestion() {
+    answers.push({ q: questions[currentIndex].q, a: '(skip)' });
+    currentIndex++;
+    updateGauge();
+    if (currentIndex >= questions.length) {
+      finishQuiz();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  // ================== 完了 ==================
+  function finishQuiz() {
+    clearInterval(timerInterval);
+
+    // 抽選券
+    const num = String(Math.floor(Math.random() * 99999)).padStart(5, '0');
+    document.getElementById('ticketNum').textContent = `#${num}`;
+
+    // 抽選日
+    const d = new Date();
+    d.setDate(d.getDate() + 3);
+    const days = ['日', '月', '火', '水', '木', '金', '土'];
+    document.getElementById('drawDate').textContent =
+      `${d.getMonth() + 1}/${d.getDate()}(${days[d.getDay()]}) 19:00`;
+
+    setTimeout(() => {
+      showScreen('complete');
+      launchConfetti();
+      console.log('回答結果:', answers);
+    }, 600);
+  }
+
+  // ================== 紙吹雪 ==================
+  function launchConfetti() {
+    const icons = ['🎉', '🎊', '⭐', '✨', '💝', '🏆', '❤️'];
+    for (let i = 0; i < 30; i++) {
+      setTimeout(() => {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.textContent = icons[Math.floor(Math.random() * icons.length)];
+        c.style.left = Math.random() * 100 + '%';
+        c.style.animationDuration = (2 + Math.random() * 2) + 's';
+        c.style.animationDelay = Math.random() * 0.5 + 's';
+        document.getElementById('complete').appendChild(c);
+        setTimeout(() => c.remove(), 4000);
+      }, i * 80);
+    }
+  }
+
+  function closeApp() {
+    alert('本番ではLIFFを閉じてLINEに戻ります\n\n【回答結果】\n' +
+      answers.map(a => `${a.q} → ${a.a}`).join('\n'));
+  }
+</script>
+</body>
+</html>
