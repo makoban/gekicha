@@ -164,6 +164,16 @@
     50% { transform: translateY(-4px); }
   }
 
+  .logo-img {
+    width: min(92%, 420px);
+    height: auto;
+    margin-top: -8px;
+    filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3));
+    animation: titleFloat 3s ease-in-out infinite;
+    z-index: 3;
+    position: relative;
+  }
+
   .subtitle-line {
     display: flex;
     align-items: center;
@@ -856,12 +866,8 @@
     <div class="rays"></div>
     <div class="bg-decor" id="bgDecor"></div>
     <div class="slot-machine">🎰</div>
-    <div class="title-3d">ゲキッチャ</div>
-    <div class="subtitle-line">
-      <span class="subtitle-deco"></span>
-      <span>激アツアンケート</span>
-      <span class="subtitle-deco"></span>
-    </div>
+    <img src="gekiccha_logo.png" alt="激アツアンケート ゲキッチャ" class="logo-img">
+
     <div class="tagline">タップするたび応援ゲージが溜まる！</div>
     <div class="gift-badge">
       <span class="emoji">🎁</span>
