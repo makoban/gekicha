@@ -907,6 +907,23 @@
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   }
+
+  .version {
+    position: fixed;
+    bottom: 12px;
+    left: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 4px 10px;
+    border-radius: 999px;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    letter-spacing: 0.5px;
+    font-variant-numeric: tabular-nums;
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
@@ -978,6 +995,7 @@
   </div>
 
   <button class="reset" onclick="location.reload()">リセット</button>
+  <div class="version">v0.6.0 · 2026.04.24</div>
 </div>
 
 <script>
