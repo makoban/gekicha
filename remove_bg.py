@@ -11,8 +11,8 @@ for y in range(h):
     for x in range(w):
         r, g, b, a = pixels[x, y]
         # Detect grayish pixels (the checker pattern)
-        is_gray = abs(r - g) < 12 and abs(g - b) < 12 and abs(r - b) < 12
-        if is_gray and 120 < r < 235:
+        is_gray = abs(r - g) < 20 and abs(g - b) < 20 and abs(r - b) < 20
+        if is_gray and 50 < r < 240:
             pixels[x, y] = (r, g, b, 0)
             changed += 1
 
