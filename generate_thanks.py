@@ -10,24 +10,30 @@ API_KEY = os.environ.get("GEMINI_API_KEY")
 if not API_KEY:
     raise SystemExit("GEMINI_API_KEY not set")
 
-PROMPT = """Create a high-quality Japanese celebration logo.
+PROMPT = """Create an ULTRA-LUXURIOUS Japanese celebration logo.
 
 Main text: "ありがとう" (Japanese hiragana, 5 characters) — MASSIVE bold 3D puffy letters taking up most of the image width, centered.
-- Pure white letter fill
-- Thick bright orange-red gradient outline (about 8px) around each letter
-- Glossy light reflection highlight on the top half of each letter, like melted vinyl candy
-- Deep stacked drop shadows beneath in red-to-dark-red gradient giving serious 3D depth
-- Slight outward bulge / bubble-text style
-- Sparkly cute look, appropriate for thanking someone warmly
+- GOLDEN metallic fill like polished 24k gold foil, with brilliant shine and highlights
+- Thick rich crimson-to-orange gradient outline (about 10px) around each letter
+- Diamond-crystal glossy reflections, mirror-bright highlights
+- Deep stacked 3D drop shadows beneath — dark red to black gradient for premium depth
+- Shimmering gold glitter and sparkle dust across every letter surface
+- Bubble text style with puffy rounded form, extra ornate
 - No line break, all 5 characters on one line
 
-Decorative elements: small ✨⭐💖 sparkles and stars surrounding the letters, feeling like a warm celebration / gratitude moment. Maybe a few heart shapes ❤️ integrated.
+Decorative elements (rich and abundant):
+- Bright gold stars ⭐ and radiating sparkles ✨ around the letters
+- Small rose-gold hearts ❤️ scattered in varied sizes
+- Pink cherry blossom petals 🌸 floating
+- Gold confetti streamers and ribbons
+- Bright white light rays emanating from behind the text
+- Crystal diamonds 💎 accent pieces
 
-Style: playful, heartfelt, exciting Japanese mobile app completion screen. Super vibrant but warm. Commercial quality.
+Style: ULTRA-PREMIUM, heartfelt, luxurious Japanese celebration, like winning a Grand Prize jackpot. Super vibrant and warm. Commercial-grade quality, ultra-crisp detail rendering. Think high-end mobile game victory screen.
 
 Background: COMPLETELY TRANSPARENT (alpha channel PNG). No color fill behind the letters.
 
-Composition: Horizontal banner layout, centered. Leave some padding around the text. Output aspect ratio 3:2."""
+Composition: Horizontal banner layout, centered. Leave padding around text. Output aspect ratio 3:2."""
 
 
 def generate():

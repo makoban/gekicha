@@ -511,7 +511,26 @@
     box-shadow:
       0 6px 12px rgba(255, 120, 60, 0.2),
       inset 0 -3px 6px rgba(255, 200, 150, 0.15);
+    position: relative;
+    isolation: isolate;
   }
+
+  .emoji-btn::before {
+    content: "";
+    position: absolute;
+    inset: 15%;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+      var(--emoji-bg, rgba(255, 200, 100, 0.4)) 0%,
+      transparent 72%);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .emoji-col:nth-child(1) .emoji-btn { --emoji-bg: rgba(255, 130, 160, 0.55); }
+  .emoji-col:nth-child(2) .emoji-btn { --emoji-bg: rgba(255, 215, 100, 0.55); }
+  .emoji-col:nth-child(3) .emoji-btn { --emoji-bg: rgba(160, 220, 140, 0.55); }
+  .emoji-col:nth-child(4) .emoji-btn { --emoji-bg: rgba(200, 170, 230, 0.55); }
 
   .emoji-btn:active {
     transform: scale(0.92) translateY(3px);
@@ -751,11 +770,12 @@
     text-align: center;
     overflow: hidden;
     display: grid;
-    grid-template-rows: 1fr auto auto auto auto auto auto 1fr;
+    grid-template-rows: 1fr auto auto auto auto auto 1fr;
     padding: 14px clamp(14px, 5vw, 22px);
     gap: clamp(6px, 1.5vh, 12px);
     align-items: center;
     justify-items: center;
+    position: relative;
   }
 
   .trophy {
@@ -791,47 +811,74 @@
     white-space: nowrap;
   }
 
-  .ticket {
-    background: linear-gradient(180deg, #fff 0%, #fff5ec 100%);
-    color: #ff5722;
-    padding: clamp(12px, 2.5vh, 18px) clamp(28px, 8vw, 40px);
-    border-radius: 18px;
-    box-shadow:
-      0 10px 30px rgba(0,0,0,0.3),
-      inset 0 -3px 6px rgba(255,200,150,0.2);
+  /* 豪華抽選券画像 */
+  .ticket-wrap {
     position: relative;
+    width: min(78%, 340px);
     z-index: 2;
-    white-space: nowrap;
+    animation: ticketDrop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
   }
 
-  .ticket::before, .ticket::after {
-    content: "";
+  .lottery-ticket {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter:
+      drop-shadow(0 10px 20px rgba(0,0,0,0.4))
+      drop-shadow(0 0 24px rgba(255, 220, 100, 0.5));
+  }
+
+  .ticket-num-overlay {
     position: absolute;
-    top: 50%;
-    width: 22px;
-    height: 22px;
-    background: #ff8c42;
-    border-radius: 50%;
-    transform: translateY(-50%);
-  }
-
-  .ticket::before { left: -11px; }
-  .ticket::after { right: -11px; }
-
-  .ticket-label {
-    font-size: clamp(11px, 3vw, 12px);
-    font-weight: 800;
-    color: #a67040;
-    white-space: nowrap;
-  }
-
-  .ticket-num {
-    font-size: clamp(32px, 10vw, 42px);
+    bottom: 14%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: clamp(22px, 7vw, 30px);
     font-weight: 900;
     font-variant-numeric: tabular-nums;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
+    color: #fff4d0;
+    text-shadow:
+      0 0 8px rgba(255, 200, 50, 0.9),
+      0 2px 4px rgba(0, 0, 0, 0.6);
     white-space: nowrap;
-    line-height: 1.1;
+    pointer-events: none;
+  }
+
+  @keyframes ticketDrop {
+    0% {
+      transform: translateY(-120vh) rotate(-25deg) scale(0.6);
+      opacity: 0;
+    }
+    60% {
+      transform: translateY(18px) rotate(6deg) scale(1.08);
+      opacity: 1;
+    }
+    80% {
+      transform: translateY(-6px) rotate(-2deg) scale(1);
+    }
+    100% {
+      transform: translateY(0) rotate(0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* 背景に降り注ぐ小さなチケット */
+  .falling-ticket {
+    position: absolute;
+    width: 60px;
+    top: -80px;
+    pointer-events: none;
+    opacity: 0.85;
+    animation: fallRotate 4s linear forwards;
+    z-index: 1;
+  }
+
+  @keyframes fallRotate {
+    to {
+      transform: translateY(120vh) rotate(720deg);
+      opacity: 0;
+    }
   }
 
   .schedule {
@@ -984,18 +1031,17 @@
   </div>
 
   <div class="screen" id="complete">
-    <div class="trophy">🏆</div>
     <img src="thanks_logo.png" alt="ありがとう" class="thanks-img">
     <div class="complete-sub">あなたの応援が届きました 💝</div>
-    <div class="ticket">
-      <div class="ticket-label">あなたの抽選券</div>
-      <div class="ticket-num" id="ticketNum">#00000</div>
+    <div class="ticket-wrap">
+      <img src="ticket_logo.png" alt="抽選券" class="lottery-ticket">
+      <div class="ticket-num-overlay" id="ticketNum">#00000</div>
     </div>
     <div class="schedule">
       <div class="schedule-label">🎰 抽選ライブ配信</div>
       <div class="schedule-date" id="drawDate">4/27(月) 19:00</div>
     </div>
-    <div class="note-text">🎊 当選者にはLINEで特別演出が届く</div>
+    <div class="note-text">📮 締切後にLINEで通知します！</div>
     <button class="close-btn" onclick="closeApp()">LINEに戻る</button>
   </div>
 
@@ -1005,7 +1051,7 @@
   </div>
 
   <button class="reset" onclick="location.reload()">リセット</button>
-  <div class="version">v0.7.0 · 2026.04.24</div>
+  <div class="version">v0.8.0 · 2026.04.24</div>
 </div>
 
 <script>
@@ -1314,8 +1360,11 @@
   }
 
   function launchConfetti() {
-    const icons = ['🎉', '🎊', '⭐', '✨', '💝', '🏆', '❤️', '🪙'];
-    for (let i = 0; i < 40; i++) {
+    const icons = ['🎉', '🎊', '⭐', '✨', '💝', '❤️', '🪙'];
+    const complete = document.getElementById('complete');
+
+    // 通常の紙吹雪
+    for (let i = 0; i < 30; i++) {
       setTimeout(() => {
         const c = document.createElement('div');
         c.className = 'confetti';
@@ -1323,10 +1372,25 @@
         c.style.left = Math.random() * 100 + '%';
         c.style.animationDuration = (2 + Math.random() * 2) + 's';
         c.style.animationDelay = Math.random() * 0.5 + 's';
-        c.style.fontSize = (18 + Math.random() * 16) + 'px';
-        document.getElementById('complete').appendChild(c);
+        c.style.fontSize = (16 + Math.random() * 14) + 'px';
+        complete.appendChild(c);
         setTimeout(() => c.remove(), 4000);
-      }, i * 60);
+      }, i * 70);
+    }
+
+    // 降り注ぐ豪華抽選券
+    for (let i = 0; i < 8; i++) {
+      setTimeout(() => {
+        const t = document.createElement('img');
+        t.src = 'ticket_logo.png';
+        t.className = 'falling-ticket';
+        t.style.left = Math.random() * 90 + '%';
+        t.style.width = (40 + Math.random() * 40) + 'px';
+        t.style.animationDuration = (3 + Math.random() * 2) + 's';
+        t.style.animationDelay = Math.random() * 0.8 + 's';
+        complete.appendChild(t);
+        setTimeout(() => t.remove(), 6000);
+      }, 300 + i * 150);
     }
   }
 
