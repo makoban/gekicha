@@ -85,6 +85,16 @@ python3 -m http.server 8000
 # → http://localhost:8000
 ```
 
+### LIFF確認
+
+LIFF ID 発行後はURLパラメータで渡すと初期化される。
+
+```bash
+http://localhost:8000/index.html?liffId=YOUR_LIFF_ID
+```
+
+LINE内ブラウザでは `liff.getContext().userId` を回答ペイロードに含める。LIFF ID 未指定または初期化失敗時はデモモードでそのまま動く。
+
 ---
 
 ## 🎨 画像の再生成

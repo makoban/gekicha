@@ -48,6 +48,14 @@
   /* ===== オープニング ===== */
   #opening {
     background:
+      radial-gradient(circle at 50% 42%,
+        rgba(255, 255, 210, 0.9) 0%,
+        rgba(255, 220, 70, 0.55) 18%,
+        transparent 38%),
+      linear-gradient(150deg,
+        transparent 0 58%,
+        rgba(255,255,255,0.18) 58% 74%,
+        transparent 74%),
       radial-gradient(ellipse 80% 60% at 50% 30%,
         #fff5d0 0%,
         #ffd93d 15%,
@@ -55,12 +63,26 @@
         #ff6b6b 65%,
         #ff4757 90%,
         #c92a2a 100%);
-    justify-content: flex-start;
+    display: grid;
+    grid-template-rows:
+      minmax(34px, 0.34fr)
+      auto
+      auto
+      auto
+      auto
+      auto
+      minmax(8px, 0.32fr)
+      auto;
+    gap: clamp(7px, 1.2vh, 13px);
+    justify-content: center;
     align-items: center;
     text-align: center;
     color: #fff;
     overflow: hidden;
-    padding: 24px 16px 16px;
+    padding:
+      clamp(14px, 2vh, 24px)
+      16px
+      calc(22px + env(safe-area-inset-bottom));
   }
 
   .bg-decor {
@@ -120,8 +142,12 @@
   }
 
   .slot-machine {
-    font-size: clamp(90px, 28vw, 130px);
-    line-height: 1;
+    width: min(34vw, 142px);
+    max-height: clamp(82px, 17vh, 132px);
+    height: auto;
+    object-fit: contain;
+    justify-self: center;
+    margin-top: clamp(10px, 2vh, 18px);
     filter:
       drop-shadow(0 10px 20px rgba(0,0,0,0.35))
       drop-shadow(0 0 30px rgba(255,255,100,0.6));
@@ -165,8 +191,10 @@
   }
 
   .logo-img {
-    width: min(92%, 420px);
+    width: min(88%, 400px);
+    max-height: clamp(142px, 25vh, 210px);
     height: auto;
+    object-fit: contain;
     margin-top: -8px;
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3));
     animation: titleFloat 3s ease-in-out infinite;
@@ -196,10 +224,10 @@
   }
 
   .tagline {
-    font-size: 14px;
+    font-size: clamp(13px, 3.8vw, 16px);
     font-weight: 700;
     color: #fff;
-    margin-top: 14px;
+    margin-top: 0;
     text-shadow: 0 2px 4px rgba(0,0,0,0.25);
     z-index: 3;
     white-space: nowrap;
@@ -211,14 +239,15 @@
     gap: 8px;
     background: rgba(255,255,255,0.95);
     color: #ff6b35;
-    padding: 9px 20px;
+    padding: clamp(8px, 1.5vh, 11px) clamp(18px, 6vw, 24px);
     border-radius: 999px;
-    font-size: 13px;
+    font-size: clamp(12px, 3.6vw, 15px);
     font-weight: 800;
-    margin-top: 16px;
+    margin-top: 0;
     box-shadow:
-      0 6px 16px rgba(0,0,0,0.2),
-      inset 0 -2px 4px rgba(255,140,66,0.2);
+      0 10px 22px rgba(160,40,20,0.22),
+      inset 0 -4px 10px rgba(255,140,66,0.18),
+      inset 0 2px 5px rgba(255,255,255,0.9);
     z-index: 3;
     white-space: nowrap;
   }
@@ -231,12 +260,12 @@
   .start-btn {
     background: linear-gradient(180deg, #ffffff 0%, #fff5ec 100%);
     color: #ff5722;
-    padding: 20px 60px;
+    padding: clamp(15px, 2.4vh, 20px) clamp(52px, 15vw, 70px);
     border-radius: 999px;
-    font-size: 26px;
+    font-size: clamp(22px, 7vw, 30px);
     font-weight: 900;
     border: none;
-    margin-top: 20px;
+    margin-top: 0;
     cursor: pointer;
     box-shadow:
       0 8px 0 #ffc77d,
@@ -265,18 +294,22 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background: linear-gradient(135deg, #fff7e0 0%, #ffedb5 100%);
-    padding: 10px 20px 10px 12px;
-    border-radius: 12px;
-    font-size: 14px;
+    width: min(94%, 410px);
+    justify-content: center;
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,245,205,0.98) 100%);
+    padding: clamp(8px, 1.5vh, 11px) clamp(16px, 5vw, 20px) clamp(8px, 1.5vh, 11px) clamp(10px, 4vw, 12px);
+    border-radius: 16px;
+    font-size: clamp(12px, 3.5vw, 15px);
     font-weight: 800;
     color: #a84a00;
-    margin-top: auto;
-    margin-bottom: 12px;
+    margin-top: 0;
+    margin-bottom: 0;
     box-shadow:
-      0 6px 16px rgba(0,0,0,0.2),
-      inset 0 -2px 4px rgba(200,140,0,0.15);
-    border: 2px solid rgba(255,255,255,0.6);
+      0 10px 24px rgba(120,40,0,0.24),
+      inset 0 -3px 8px rgba(200,140,0,0.14),
+      inset 0 2px 5px rgba(255,255,255,0.95);
+    border: 2px solid rgba(255,255,255,0.82);
     z-index: 3;
     white-space: nowrap;
   }
@@ -308,11 +341,14 @@
         #ffd4a8 100%);
     color: #2a2a2a;
     overflow: hidden;
-    padding: 14px clamp(14px, 5vw, 22px);
-    /* Grid配置: top / gauge / question / options(flex) / skip */
+    padding:
+      14px
+      clamp(14px, 5vw, 22px)
+      calc(74px + env(safe-area-inset-bottom));
+    /* Grid配置: top / gauge / answer stage / skip */
     display: grid;
-    grid-template-rows: auto auto auto 1fr auto;
-    gap: 10px;
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+    gap: clamp(6px, 1vh, 10px);
   }
 
   .quiz-sparkles {
@@ -335,7 +371,7 @@
     50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
   }
 
-  .quiz > * {
+  .quiz > :not(.quiz-sparkles) {
     position: relative;
     z-index: 1;
   }
@@ -466,14 +502,25 @@
     text-shadow: 0 2px 4px rgba(255,255,255,0.8);
   }
 
+  .answer-stage {
+    width: 100%;
+    max-width: 460px;
+    min-height: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(18px, 4.2vh, 46px);
+  }
+
   .options {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: clamp(9px, 1.4vh, 12px);
     justify-content: center;
     align-items: stretch;
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
     width: 100%;
     max-width: 440px;
     margin: 0 auto;
@@ -498,9 +545,11 @@
   .emoji-btn {
     aspect-ratio: 1;
     width: 100%;
-    background: linear-gradient(180deg, #fff, #fff5ec);
-    border: 3px solid #fff;
-    border-radius: 20px;
+    background:
+      radial-gradient(circle at 50% 35%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.88) 44%, rgba(255,244,231,0.98) 100%),
+      linear-gradient(180deg, #ffffff, #fff1e4);
+    border: 3px solid rgba(255,255,255,0.96);
+    border-radius: 22px;
     font-size: clamp(32px, 10vw, 42px);
     cursor: pointer;
     transition: all 0.15s;
@@ -508,10 +557,25 @@
     align-items: center;
     justify-content: center;
     box-shadow:
-      0 6px 12px rgba(255, 120, 60, 0.2),
-      inset 0 -3px 6px rgba(255, 200, 150, 0.15);
+      0 8px 0 rgba(255, 190, 130, 0.55),
+      0 14px 24px rgba(180, 70, 30, 0.14),
+      inset 0 -8px 16px rgba(255, 180, 120, 0.18),
+      inset 0 4px 10px rgba(255,255,255,0.95);
     position: relative;
     isolation: isolate;
+  }
+
+  .emoji-btn::after,
+  .option-btn::after,
+  .tag-btn::after {
+    content: "";
+    position: absolute;
+    inset: 5px 7px auto 7px;
+    height: 34%;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0));
+    pointer-events: none;
+    z-index: 1;
   }
 
   .emoji-btn::before {
@@ -532,39 +596,55 @@
   .emoji-col:nth-child(4) .emoji-btn { --emoji-bg: rgba(200, 170, 230, 0.55); }
 
   .emoji-btn:active {
-    transform: scale(0.92) translateY(3px);
-    box-shadow: 0 2px 6px rgba(255, 120, 60, 0.2);
+    transform: scale(0.95) translateY(5px);
+    box-shadow:
+      0 3px 0 rgba(255, 190, 130, 0.55),
+      0 6px 12px rgba(180, 70, 30, 0.12),
+      inset 0 -4px 10px rgba(255, 180, 120, 0.18);
   }
 
   .emoji-label {
     text-align: center;
-    font-size: 11px;
+    font-size: clamp(11px, 3.2vw, 13px);
     color: #a67040;
-    font-weight: 700;
+    font-weight: 800;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.75);
   }
 
   .option-btn {
-    background: linear-gradient(180deg, #fff, #fff5ec);
-    border: 3px solid #fff;
-    border-radius: 16px;
-    padding: 16px 20px;
+    background:
+      radial-gradient(circle at 18% 0%, rgba(255,255,255,0.98), transparent 42%),
+      linear-gradient(180deg, #ffffff 0%, #fff8f1 58%, #ffe8d4 100%);
+    border: 3px solid rgba(255,255,255,0.96);
+    border-radius: 18px;
+    padding: clamp(12px, 2vh, 16px) 20px;
     font-size: clamp(15px, 4.6vw, 18px);
-    font-weight: 800;
+    font-weight: 900;
     cursor: pointer;
     transition: all 0.15s;
     text-align: center;
     color: #3a1a0a;
     width: 100%;
     box-shadow:
-      0 5px 10px rgba(255, 120, 60, 0.18),
-      inset 0 -3px 6px rgba(255, 200, 150, 0.15);
+      0 7px 0 rgba(255, 188, 125, 0.65),
+      0 12px 22px rgba(170, 70, 30, 0.13),
+      inset 0 -8px 14px rgba(255, 180, 120, 0.16),
+      inset 0 4px 10px rgba(255,255,255,0.95);
+    position: relative;
+    overflow: hidden;
   }
 
   .option-btn:active {
-    transform: scale(0.97) translateY(3px);
-    background: linear-gradient(135deg, #ff8c42, #ffa94d);
+    transform: scale(0.985) translateY(5px);
+    background:
+      radial-gradient(circle at 18% 0%, rgba(255,255,255,0.35), transparent 42%),
+      linear-gradient(135deg, #ff9a3d, #ff5b2e);
     color: #fff;
-    box-shadow: 0 2px 6px rgba(255, 120, 60, 0.3);
+    text-shadow: 0 2px 3px rgba(120, 30, 0, 0.22);
+    box-shadow:
+      0 3px 0 #c73a10,
+      0 6px 12px rgba(255, 87, 34, 0.25),
+      inset 0 3px 8px rgba(255,255,255,0.28);
   }
 
   .slider-wrap {
@@ -593,22 +673,29 @@
   }
 
   .slider::-webkit-slider-runnable-track {
-    height: 14px;
-    background: linear-gradient(90deg, #ffd93d, #ff5722);
-    border-radius: 7px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    height: 18px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.45), transparent),
+      linear-gradient(90deg, #ffd93d, #ff8c42, #ff5722);
+    border-radius: 999px;
+    box-shadow:
+      inset 0 2px 5px rgba(120, 60, 0, 0.16),
+      0 5px 12px rgba(255, 110, 50, 0.18);
   }
 
   .slider::-webkit-slider-thumb {
     appearance: none;
-    width: 42px;
-    height: 42px;
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
-    background: #fff;
+    background:
+      radial-gradient(circle at 35% 30%, #fff 0%, #fff7ee 42%, #ffd0a8 100%);
     border: 5px solid #ff5722;
-    margin-top: -15px;
+    margin-top: -14px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    box-shadow:
+      0 7px 14px rgba(160, 60, 20, 0.26),
+      inset 0 3px 7px rgba(255,255,255,0.9);
   }
 
   .slider-labels {
@@ -622,24 +709,28 @@
 
   .slider-submit,
   .tag-submit {
-    margin-top: 16px;
+    margin-top: clamp(10px, 1.7vh, 14px);
     width: 100%;
-    background: linear-gradient(180deg, #ff8c42, #ff5722);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.28), transparent 38%),
+      linear-gradient(180deg, #ff9a3d, #ff5722);
     color: #fff;
-    border: none;
-    padding: 16px;
+    border: 2px solid rgba(255,255,255,0.7);
+    padding: clamp(12px, 2vh, 16px);
     border-radius: 999px;
     font-size: clamp(16px, 5vw, 19px);
     font-weight: 900;
     cursor: pointer;
     box-shadow:
-      0 5px 0 #c73a10,
-      0 8px 16px rgba(255, 87, 34, 0.4);
+      0 7px 0 #c73a10,
+      0 12px 22px rgba(255, 87, 34, 0.32),
+      inset 0 4px 10px rgba(255,255,255,0.25);
+    text-shadow: 0 2px 3px rgba(110, 28, 0, 0.22);
   }
 
   .slider-submit:active,
   .tag-submit:active {
-    transform: translateY(4px);
+    transform: translateY(5px);
     box-shadow:
       0 2px 0 #c73a10,
       0 4px 10px rgba(255, 87, 34, 0.3);
@@ -648,39 +739,79 @@
   .tag-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: clamp(6px, 1vh, 8px);
     width: 100%;
   }
 
   .tag-btn {
-    background: linear-gradient(180deg, #fff, #fff5ec);
-    border: 3px solid #fff;
-    border-radius: 14px;
-    padding: 14px 8px;
+    background:
+      radial-gradient(circle at 18% 0%, rgba(255,255,255,0.98), transparent 42%),
+      linear-gradient(180deg, #ffffff 0%, #fff8f1 58%, #ffe8d4 100%);
+    border: 3px solid rgba(255,255,255,0.96);
+    border-radius: 16px;
+    padding: clamp(8px, 1.35vh, 12px) 8px;
     font-size: clamp(14px, 4vw, 16px);
-    font-weight: 800;
+    font-weight: 900;
     cursor: pointer;
     transition: all 0.15s;
     color: #3a1a0a;
     box-shadow:
-      0 5px 10px rgba(255, 120, 60, 0.18),
-      inset 0 -3px 6px rgba(255, 200, 150, 0.15);
+      0 6px 0 rgba(255, 188, 125, 0.65),
+      0 10px 18px rgba(170, 70, 30, 0.13),
+      inset 0 -7px 12px rgba(255, 180, 120, 0.16),
+      inset 0 4px 10px rgba(255,255,255,0.95);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tag-grid + .tag-submit {
+    margin-top: clamp(8px, 1.2vh, 10px);
+    padding: clamp(11px, 1.6vh, 14px);
+    box-shadow:
+      0 5px 0 #c73a10,
+      0 9px 16px rgba(255, 87, 34, 0.28),
+      inset 0 4px 10px rgba(255,255,255,0.25);
   }
 
   .tag-btn.selected {
-    background: linear-gradient(135deg, #ff8c42, #ffa94d);
+    background:
+      radial-gradient(circle at 18% 0%, rgba(255,255,255,0.35), transparent 42%),
+      linear-gradient(135deg, #ff9a3d, #ff5b2e);
     color: #fff;
-    transform: scale(0.97);
+    transform: scale(0.97) translateY(4px);
+    box-shadow:
+      0 2px 0 #c73a10,
+      0 5px 12px rgba(255, 87, 34, 0.24),
+      inset 0 3px 8px rgba(255,255,255,0.28);
+    text-shadow: 0 2px 3px rgba(120, 30, 0, 0.22);
   }
 
   .skip {
     text-align: center;
-    margin-top: 0;
-    color: #b89060;
-    font-size: 14px;
+    justify-self: center;
+    min-width: 150px;
+    margin-top: clamp(6px, 1vh, 10px);
+    color: #9a5d2e;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,246,235,0.88));
+    border: 2px solid rgba(255,255,255,0.82);
+    border-radius: 999px;
+    font-size: clamp(14px, 4vw, 16px);
     cursor: pointer;
-    padding: 6px;
-    font-weight: 600;
+    padding: 10px 22px;
+    font-weight: 900;
+    box-shadow:
+      0 5px 0 rgba(255, 188, 125, 0.55),
+      0 10px 18px rgba(150, 70, 20, 0.12),
+      inset 0 3px 8px rgba(255,255,255,0.85);
+    white-space: nowrap;
+  }
+
+  .skip:active {
+    transform: translateY(4px);
+    box-shadow:
+      0 2px 0 rgba(255, 188, 125, 0.55),
+      0 5px 10px rgba(150, 70, 20, 0.12);
   }
 
   /* 褒めポップアップ */
@@ -769,9 +900,19 @@
     text-align: center;
     overflow: hidden;
     display: grid;
-    grid-template-rows: 1fr auto auto auto auto auto 1fr;
-    padding: 14px clamp(14px, 5vw, 22px);
-    gap: clamp(6px, 1.5vh, 12px);
+    grid-template-rows:
+      minmax(4px, 0.32fr)
+      auto
+      auto
+      auto
+      auto
+      auto
+      minmax(calc(46px + env(safe-area-inset-bottom)), 0.38fr);
+    padding:
+      clamp(8px, 1.8vh, 14px)
+      clamp(14px, 5vw, 22px)
+      calc(48px + env(safe-area-inset-bottom));
+    gap: clamp(4px, 1vh, 10px);
     align-items: center;
     justify-items: center;
   }
@@ -793,8 +934,10 @@
   }
 
   .thanks-img {
-    width: min(86%, 400px);
+    width: min(86%, 390px);
+    max-height: clamp(120px, 24vh, 190px);
     height: auto;
+    object-fit: contain;
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.35));
     animation: titleFloat 3s ease-in-out infinite;
     z-index: 2;
@@ -812,7 +955,8 @@
   /* 豪華抽選券画像 */
   .ticket-wrap {
     position: relative;
-    width: min(78%, 340px);
+    width: min(78%, 330px);
+    max-height: clamp(100px, 21vh, 160px);
     z-index: 2;
     animation: ticketDrop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
   }
@@ -820,6 +964,8 @@
   .lottery-ticket {
     width: 100%;
     height: auto;
+    max-height: clamp(100px, 21vh, 160px);
+    object-fit: contain;
     display: block;
     filter:
       drop-shadow(0 10px 20px rgba(0,0,0,0.4))
@@ -831,7 +977,7 @@
     bottom: 14%;
     left: 50%;
     transform: translateX(-50%);
-    font-size: clamp(22px, 7vw, 30px);
+    font-size: clamp(20px, 6.5vw, 28px);
     font-weight: 900;
     font-variant-numeric: tabular-nums;
     letter-spacing: 2px;
@@ -881,7 +1027,7 @@
 
   .schedule {
     background: rgba(0,0,0,0.3);
-    padding: clamp(10px, 2vh, 14px) clamp(20px, 7vw, 28px);
+    padding: clamp(8px, 1.5vh, 12px) clamp(18px, 6vw, 26px);
     border-radius: 12px;
     backdrop-filter: blur(10px);
     z-index: 2;
@@ -897,7 +1043,7 @@
   }
 
   .schedule-date {
-    font-size: clamp(18px, 5.5vw, 22px);
+    font-size: clamp(17px, 5.2vw, 21px);
     font-weight: 900;
     white-space: nowrap;
   }
@@ -914,7 +1060,7 @@
   .close-btn {
     background: linear-gradient(180deg, #ffffff, #fff5ec);
     color: #ff5722;
-    padding: clamp(14px, 2.4vh, 18px) clamp(32px, 11vw, 48px);
+    padding: clamp(12px, 1.8vh, 16px) clamp(30px, 10vw, 46px);
     border-radius: 999px;
     font-size: clamp(15px, 4.5vw, 18px);
     font-weight: 900;
@@ -925,7 +1071,7 @@
       0 10px 20px rgba(0,0,0,0.2);
     z-index: 2;
     white-space: nowrap;
-    align-self: start;
+    align-self: center;
   }
 
   .close-btn:active {
@@ -951,18 +1097,30 @@
 
   .reset {
     position: fixed;
-    bottom: 10px;
-    right: 10px;
-    background: rgba(255,255,255,0.7);
-    color: #333;
-    border: none;
-    padding: 6px 14px;
+    bottom: calc(18px + env(safe-area-inset-bottom));
+    right: 14px;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,245,238,0.94));
+    color: #6a3a24;
+    border: 2px solid rgba(255,255,255,0.8);
+    padding: 10px 20px;
     border-radius: 999px;
-    font-size: 11px;
-    font-weight: 700;
+    font-size: 15px;
+    font-weight: 900;
     z-index: 1000;
     cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    box-shadow:
+      0 6px 0 rgba(210, 150, 100, 0.45),
+      0 10px 18px rgba(80, 35, 10, 0.14),
+      inset 0 3px 8px rgba(255,255,255,0.9);
+    white-space: nowrap;
+  }
+
+  .reset:active {
+    transform: translateY(4px);
+    box-shadow:
+      0 2px 0 rgba(210, 150, 100, 0.45),
+      0 5px 10px rgba(80, 35, 10, 0.14);
   }
 
   .version {
@@ -1002,6 +1160,7 @@
     transform: translateY(2px);
   }
 </style>
+<script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 </head>
 <body>
 <div class="app" id="app">
@@ -1009,7 +1168,7 @@
   <div class="screen active" id="opening">
     <div class="rays"></div>
     <div class="bg-decor" id="bgDecor"></div>
-    <div class="slot-machine">🎰</div>
+    <img src="assets/slot-machine-v2.png" alt="スロットマシン" class="slot-machine">
     <img src="gekiccha_logo.png" alt="激アツアンケート ゲキッチャ" class="logo-img">
 
     <div class="tagline">タップするたび応援ゲージが溜まる！</div>
@@ -1043,8 +1202,10 @@
       </div>
       <div class="gauge-msg" id="gaugeMsg">タップで応援パワーを溜めよう！</div>
     </div>
-    <div class="question" id="question"></div>
-    <div class="options" id="options"></div>
+    <div class="answer-stage">
+      <div class="question" id="question"></div>
+      <div class="options" id="options"></div>
+    </div>
     <div class="skip" id="skipBtn" onclick="skipQuestion()">答えない →</div>
   </div>
 
@@ -1069,11 +1230,93 @@
   </div>
 
   <a href="explain.html" class="info-btn">📖 サービスについて</a>
-  <button class="reset" onclick="location.reload()">リセット</button>
-  <div class="version">v0.9.0 · 2026.04.24</div>
+  <button class="reset" onclick="goBack()">戻る</button>
+  <div class="version">v1.0.8 · 2026.04.25</div>
 </div>
 
 <script>
+  const LIFF_ID = new URLSearchParams(location.search).get('liffId') || '';
+  const liffState = {
+    ready: false,
+    available: false,
+    inClient: false,
+    context: null,
+    profile: null,
+    error: null
+  };
+
+  async function initLiff() {
+    if (!window.liff) {
+      liffState.error = 'LIFF SDK is not loaded';
+      console.info('[LIFF] SDK未読込のためデモモードで起動します');
+      return;
+    }
+
+    if (!LIFF_ID) {
+      liffState.available = true;
+      liffState.inClient = liff.isInClient();
+      liffState.context = safelyGetLiffContext();
+      console.info('[LIFF] liffId未指定のためデモモードで起動します', liffState.context);
+      return;
+    }
+
+    try {
+      await liff.init({ liffId: LIFF_ID });
+      liffState.ready = true;
+      liffState.available = true;
+      liffState.inClient = liff.isInClient();
+      liffState.context = safelyGetLiffContext();
+
+      if (liff.isLoggedIn()) {
+        liffState.profile = await liff.getProfile();
+      }
+
+      console.info('[LIFF] 初期化完了', {
+        userId: getLineUserId(),
+        inClient: liffState.inClient,
+        context: liffState.context
+      });
+    } catch (error) {
+      liffState.error = error;
+      console.warn('[LIFF] 初期化に失敗しました。デモモードで続行します', error);
+    }
+  }
+
+  function safelyGetLiffContext() {
+    try {
+      return window.liff ? liff.getContext() : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  function getLineUserId() {
+    return liffState.context?.userId || liffState.profile?.userId || null;
+  }
+
+  function createAnswerPayload(ticketNumber) {
+    return {
+      ticketNumber,
+      lineUserId: getLineUserId(),
+      liff: {
+        ready: liffState.ready,
+        inClient: liffState.inClient,
+        context: liffState.context,
+        profile: liffState.profile
+          ? {
+              userId: liffState.profile.userId,
+              displayName: liffState.profile.displayName,
+              pictureUrl: liffState.profile.pictureUrl
+            }
+          : null,
+        error: liffState.error ? String(liffState.error.message || liffState.error) : null
+      },
+      elapsedSeconds: Math.floor((Date.now() - startTime) / 1000),
+      submittedAt: new Date().toISOString(),
+      answers
+    };
+  }
+
   function spawnBgDecor() {
     const container = document.getElementById('bgDecor');
     const items = ['🪙', '✨', '⭐', '🎊', '💛', '🟡', '🎉'];
@@ -1362,6 +1605,34 @@
     }
   }
 
+  function goBack() {
+    const activeId = document.querySelector('.screen.active')?.id;
+
+    if (activeId === 'opening') {
+      return;
+    }
+
+    if (activeId === 'complete') {
+      currentIndex = Math.max(questions.length - 1, 0);
+      answers = answers.slice(0, -1);
+      updateGauge();
+      renderQuestion();
+      showScreen('quiz');
+      return;
+    }
+
+    if (currentIndex <= 0) {
+      clearInterval(timerInterval);
+      showScreen('opening');
+      return;
+    }
+
+    answers = answers.slice(0, -1);
+    currentIndex--;
+    updateGauge();
+    renderQuestion();
+  }
+
   function finishQuiz() {
     clearInterval(timerInterval);
     const num = String(Math.floor(Math.random() * 99999)).padStart(5, '0');
@@ -1374,7 +1645,7 @@
     setTimeout(() => {
       showScreen('complete');
       launchConfetti();
-      console.log('回答結果:', answers);
+      console.log('回答結果:', createAnswerPayload(num));
     }, 600);
   }
 
@@ -1414,9 +1685,16 @@
   }
 
   function closeApp() {
+    if (window.liff && liffState.inClient) {
+      liff.closeWindow();
+      return;
+    }
+
     alert('本番ではLIFFを閉じてLINEに戻ります\n\n【回答結果】\n' +
       answers.map(a => `${a.q} → ${a.a}`).join('\n'));
   }
+
+  initLiff();
 </script>
 </body>
 </html>
