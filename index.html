@@ -901,17 +901,17 @@
     overflow: hidden;
     display: grid;
     grid-template-rows:
-      minmax(4px, 0.32fr)
+      minmax(78px, 0.52fr)
       auto
       auto
       auto
       auto
       auto
-      minmax(calc(46px + env(safe-area-inset-bottom)), 0.38fr);
+      minmax(calc(18px + env(safe-area-inset-bottom)), 0.24fr);
     padding:
-      clamp(8px, 1.8vh, 14px)
+      calc(18px + env(safe-area-inset-top))
       clamp(14px, 5vw, 22px)
-      calc(48px + env(safe-area-inset-bottom));
+      calc(18px + env(safe-area-inset-bottom));
     gap: clamp(4px, 1vh, 10px);
     align-items: center;
     justify-items: center;
@@ -934,8 +934,8 @@
   }
 
   .thanks-img {
-    width: min(86%, 390px);
-    max-height: clamp(120px, 24vh, 190px);
+    width: min(96%, 460px);
+    max-height: clamp(175px, 31vh, 260px);
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0 8px 16px rgba(0,0,0,0.35));
@@ -950,6 +950,11 @@
     text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     z-index: 2;
     white-space: nowrap;
+  }
+
+  #complete.active ~ .info-btn,
+  #complete.active ~ .reset {
+    display: none;
   }
 
   /* 豪華抽選券画像 */
@@ -1231,7 +1236,7 @@
 
   <a href="explain.html" class="info-btn">📖 サービスについて</a>
   <button class="reset" onclick="goBack()">戻る</button>
-  <div class="version">v1.0.8 · 2026.04.25</div>
+  <div class="version">v1.0.10 · 2026.04.25</div>
 </div>
 
 <script>
